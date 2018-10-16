@@ -1,0 +1,61 @@
+.mainframe {
+  background-color: lightpink;
+  display:flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+#container {
+  background-color: aliceblue;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  width: 500px;
+  height: 500px;
+}
+
+#scoreboard {
+  background-color: lightgreen;
+  padding: 20px;
+  display: flex;
+  width: 500px;
+  height: 100px;
+}
+
+.empty {
+  background-color: lavender;
+}
+
+.playerOne {
+  background-color: #ff6f69;
+}
+
+.playerTwo {
+  background-color: #ffcc5c;
+}
+
+.playerThree {
+  background-color: #ffeead;
+}
+
+.playerFour {
+  background-color: #96ceb4;
+}
+
+.crate {
+  background-color: black;
+  /* background: url("/crate.png") fixed center; */
+}
+
+.speedyBoots {
+  background-color: red;
+}
+
+div {
+  height: 9%;
+  width: 9%;
+  border: 2px solid black;
+  background-color: white;
+  border-radius: 15%;
+}
