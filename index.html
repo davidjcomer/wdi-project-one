@@ -3,27 +3,57 @@
 <head>
   <meta charset="utf-8">
   <title>Grid</title>
-  <link href="https://fonts.googleapis.com/css?family=Space+Mono:400,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 
-  <body class="mainframe">
-    <header id="header">
-      <div class="playerOneScorecard">P1
-      </div>
-      <div class="playerTwoScorecard">P2
-      </div>
-      <div id="title">David's Game
-      </div>
-      <div class="playerThreeScorecard">P3
-      </div>
-      <div class="playerFourScorecard">P4
-      </div>
-    </header>
-
-
-    <main id="container">
-    </main>
-
+  <body class="mainframe" id="divID">
+    <!-- <script type="text/javascript">
+    const imgCount = 3;
+        const dir = 'images/';
+        const randomCount = Math.round(Math.random() * (imgCount - 1)) + 1;
+        const images = new Array
+                images[1] = "bg-01.jpg",
+                images[2] = "bg-02.jpg",
+                images[3] = "bg-03.jpg",
+        document.getElementById("divID").style.backgroundImage = "url(" + dir + images[randomCount] + ")";
+   </script> -->
+   <!-- <div id="loadingScreen"> <span id="loadingSpan">Loading Game</span>
+   </div>
+     <div id="gameScreen"> -->
+       <header id="header">
+         <div class="ScorecardLabel">Player One
+         </div>
+         <div class="ScorecardLabel">Player Two
+         </div>
+         <div class="title">David's Game
+         </div>
+         <div class="ScorecardLabel">Player Three
+         </div>
+         <div class="ScorecardLabel">Player Four
+         </div>
+         <div class="playerOneScorecard">0
+         </div>
+         <div class="playerTwoScorecard">0
+         </div>
+         <div class="empty">
+         </div>
+         <div class="playerThreeScorecard">
+         </div>
+         <div class="playerFourScorecard">
+         </div>
+       </header>
+       <aside id="buttons">
+         <button class="start" type="button" name="button">Start</button>
+         <div class="clock">
+           60:00
+         </div>
+         <button class="reset" type="button" name="button">Reset</button>
+       </aside>
+       <main id="container">
+       </main>
+       <aside id="blank">
+       </aside>
+     <!-- </div> -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" charset="utf-8"></script>
     <script src="./app3.js" charset="utf-8"></script>
