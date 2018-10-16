@@ -14,13 +14,17 @@ let crateX;
 let crateY;
 // let speedyBootsX;
 // let speedyBootsY;
-// const $score = $('.score');
-// const scoreboard = document.getElementById('scoreboard');
-const generatedGrid = document.getElementById('container');
+const $currentDisplayTime = $('.currentDisplayTime');
+const $start = $('.start');
+const $reset = $('.reset');
+let time = 5;
+let intervalId;
+
+const gridSpace = document.getElementById('container');
 
 window.addEventListener('keydown', movePlayerOne, false);
 window.addEventListener('keydown', movePlayerTwo, false);
-//
+
 // window.addEventListener("keypress", dealWithKeyboard, false);
 // window.addEventListener("keyup", dealWithKeyboard, false);
 
@@ -42,7 +46,7 @@ function loadGrid() {
       // if (columns === (playerFourX - 1) && rows === (playerFourY - 1)) {
       //   emptyTile.classList.add('playerFour');
       // }
-      generatedGrid.appendChild(emptyTile);
+      gridSpace.appendChild(emptyTile);
       emptyTile.setAttribute('rowid', rows + 1);
       emptyTile.setAttribute('columnid', columns + 1);
     }
@@ -90,7 +94,7 @@ function movePlayerOne(e) {
       playerOneY--;
       break;
   }
-  
+
   const playerOnePosition = document.querySelector(`div[rowid="${playerOneY}"][columnid="${playerOneX}"]`);
   playerOnePosition.classList.remove('playerTwo');
   playerOnePosition.classList.remove('playerThree');
@@ -104,12 +108,12 @@ function movePlayerOne(e) {
     squaresToRemove.forEach(square => square.classList.remove('playerOne'));
 
     playerOnePosition.classList.remove('crate');
-    generatedGrid.classList.remove('playerOne'); //ALL DIVS
+    gridSpace.classList.remove('playerOne'); //ALL DIVS
     playerOnePosition.classList.add('playerOne');
     playerOneBankedScore = playerOneBankedScore + playerOneCurrentScore;
     playerOneCurrentScore = 0;
-    console.log(`Player Ones banked score is ${playerOneBankedScore}`);
-    console.log(`Player Ones current score is ${playerOneCurrentScore}`);
+    const $playerOneScore = $('.playerOneScorecard');
+    $playerOneScore.html(`${playerOneBankedScore}`);
     spawnCrate();
   }
 }
@@ -191,6 +195,8 @@ function movePlayerTwo() {
     playerTwoPosition.classList.add('playerTwo');
     playerTwoBankedScore = playerTwoBankedScore + playerTwoCurrentScore;
     playerTwoCurrentScore = 0;
+    const $playerTwoScore = $('.playerTwoScorecard');
+    $playerTwoScore.html(`${playerTwoBankedScore}`);
     spawnCrate();
   }
 }
