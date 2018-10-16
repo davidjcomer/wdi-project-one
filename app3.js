@@ -1,10 +1,10 @@
 let playerOneX = 1;
 let playerOneY = 1;
-let playerOneScore;
-let playerOneCurrentScore;
+let playerOneBankedScore = 0;
+let playerOneCurrentScore = 0;
 let playerTwoX = 10;
 let playerTwoY = 10;
-let playerTwoScore;
+let playerTwoBankedScore;
 let playerTwoCurrentScore;
 // let playerThreeX = 1;
 // let playerThreeY = 10;
@@ -29,8 +29,6 @@ function loadGrid() {
     for (let columns = 0; columns < 10; columns++) {
       const emptyTile = document.createElement('div');
       emptyTile.classList.add('empty');
-      // const barrier = document.createElement('div');
-      // barrier.classList.add('barrier'); {
       if (columns === (playerOneX - 1) && rows === (playerOneY - 1)) {
         emptyTile.classList.add('playerOne');
         // scoreboard.classList.add('playerOneActive')
@@ -92,19 +90,26 @@ function movePlayerOne(e) {
       playerOneY--;
       break;
   }
+  
   const playerOnePosition = document.querySelector(`div[rowid="${playerOneY}"][columnid="${playerOneX}"]`);
   playerOnePosition.classList.remove('playerTwo');
   playerOnePosition.classList.remove('playerThree');
   playerOnePosition.classList.remove('playerFour');
   playerOnePosition.classList.add('playerOne');
-  const cratePosition = document.querySelector(`div[rowid="${crateY}"][columnid="${crateX}"]`);
-  if (playerOnePosition === cratePosition) {
-    console.log('I have opened the crate');
+  playerOneCurrentScore++;
+
+
+  if (playerOneX === crateX && playerOneY === crateY) {
+    const squaresToRemove = document.querySelectorAll('.playerOne');
+    squaresToRemove.forEach(square => square.classList.remove('playerOne'));
+
     playerOnePosition.classList.remove('crate');
-    playerOnePosition.classList.add('playerOne');
     generatedGrid.classList.remove('playerOne'); //ALL DIVS
-    playerOneScore = playerOneScore + playerOneCurrentScore;
+    playerOnePosition.classList.add('playerOne');
+    playerOneBankedScore = playerOneBankedScore + playerOneCurrentScore;
     playerOneCurrentScore = 0;
+    console.log(`Player Ones banked score is ${playerOneBankedScore}`);
+    console.log(`Player Ones current score is ${playerOneCurrentScore}`);
     spawnCrate();
   }
 }
@@ -121,16 +126,12 @@ function movePlayerTwo() {
   const move = Math.floor((Math.random() * 4));
 
   if (playerTwoX === 10) {
-    console.log('barrier ahead, turning back');
     playerTwoX--;
   } else if (playerTwoX === 1) {
-    console.log('barrier ahead, turning back');
     playerTwoX++;
   } else if (playerTwoY === 10) {
-    console.log('barrier ahead, turning back');
     playerTwoY--;
   } else if (playerTwoY === 1) {
-    console.log('barrier ahead, turning back');
     playerTwoY++;
 
 
@@ -181,14 +182,15 @@ function movePlayerTwo() {
   playerTwoPosition.classList.remove('playerThree');
   playerTwoPosition.classList.remove('playerFour');
   playerTwoPosition.classList.add('playerTwo');
-  const cratePosition = document.querySelector(`div[rowid="${crateY}"][columnid="${crateX}"]`);
-  if (playerTwoPosition === cratePosition) {
-    console.log('I have opened the crate');
+  playerTwoCurrentScore++;
+
+  if (playerTwoX === crateX && playerTwoY === crateY) {
+    const squaresToRemove = document.querySelectorAll('.playerTwo');
+    squaresToRemove.forEach(square => square.classList.remove('playerTwo'));
     playerTwoPosition.classList.remove('crate');
     playerTwoPosition.classList.add('playerTwo');
-    generatedGrid.classList.remove('playerTwo'); //ALL DIVS
-    playerOneScore = playerOneScore + playerOneCurrentScore;
-    playerOneCurrentScore = 0;
+    playerTwoBankedScore = playerTwoBankedScore + playerTwoCurrentScore;
+    playerTwoCurrentScore = 0;
     spawnCrate();
   }
 }
