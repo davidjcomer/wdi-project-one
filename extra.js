@@ -1,90 +1,88 @@
-function movePlayerTwo() {
+//****************************//
+// playerThree Movement Logic   //
+//****************************//
+
+function moveplayerThree() {
   const move = Math.floor((Math.random() * 4));
-  // const duration = Math.floor((Math.random() * 9));
-  if (playerTwoX === 10) {
-    console.log('barrier ahead, turning back');
-    playerTwoX--;
-  } else if (playerTwoX === 1) {
-    console.log('barrier ahead, turning back');
-    playerTwoX++;
-  } else if (playerTwoY === 10) {
-    console.log('barrier ahead, turning back');
-    playerTwoY--;
-  } else if (playerTwoY === 1) {
-    console.log('barrier ahead, turning back');
-    playerTwoY++;
-    //prevent playerTwo from moving into squares already coloured with playerTwo
+
+  // Rudimentary Barrier logic //
+  if (playerThreeX === 10) {
+    playerThreeX--;
+  } else if (playerThreeX === 1) {
+    playerThreeX++;
+  } else if (playerThreeY === 10) {
+    playerThreeY--;
+  } else if (playerThreeY === 1) {
+    playerThreeY++;
+
+  // Preventative movement logic //
   } else if (move === 0) {
-    console.log('left');
-    potentialNewTile = document.querySelector(`div[rowid="${playerTwoY}"][columnid="${playerTwoX - 1}"]`);
+    // console.log('left');
+    potentialNewTile = document.querySelector(`div[rowid="${playerThreeY}"][columnid="${playerThreeX - 1}"]`);
     console.log(potentialNewTile);
-    if (potentialNewTile.classList.contains('playerTwo')) {
-      console.log('i am moving up');
-      playerTwoY++;
+    if (potentialNewTile.classList.contains('playerThree')) {
+      // console.log('i am moving up');
+      playerThreeY++;
     } else {
-      playerTwoX--;
+      playerThreeX--;
     }
 
   } else if (move === 1) {
-    console.log('up');
-    potentialNewTile = document.querySelector(`div[rowid="${playerTwoY + 1}"][columnid="${playerTwoX}"]`);
-    if (potentialNewTile.classList.contains('playerTwo')) {
-      console.log('i am moving right');
-      playerTwoX++;
+    // console.log('up');
+    potentialNewTile = document.querySelector(`div[rowid="${playerThreeY + 1}"][columnid="${playerThreeX}"]`);
+    if (potentialNewTile.classList.contains('playerThree')) {
+      // console.log('i am moving right');
+      playerThreeX++;
     } else {
-      playerTwoY++;
+      playerThreeY++;
     }
 
   } else if (move === 2) {
-    console.log('right');
-    potentialNewTile = document.querySelector(`div[rowid="${playerTwoY}"][columnid="${playerTwoX + 1}"]`);
-    if (potentialNewTile.classList.contains('playerTwo')) {
-      console.log('i am moving down');
-      playerTwoY--;
+    // console.log('right');
+    potentialNewTile = document.querySelector(`div[rowid="${playerThreeY}"][columnid="${playerThreeX + 1}"]`);
+    if (potentialNewTile.classList.contains('playerThree')) {
+      // console.log('i am moving down');
+      playerThreeY--;
     } else {
-      playerTwoX++;
+      playerThreeX++;
     }
 
   } else if (move === 3) {
-    console.log('down');
-    potentialNewTile = document.querySelector(`div[rowid="${playerTwoY - 1}"][columnid="${playerTwoX}"]`);
-    if (potentialNewTile.classList.contains('playerTwo')) {
-      console.log('i am moving left');
-      playerTwoX--;
+    // console.log('down');
+    potentialNewTile = document.querySelector(`div[rowid="${playerThreeY - 1}"][columnid="${playerThreeX}"]`);
+    if (potentialNewTile.classList.contains('playerThree')) {
+      // console.log('i am moving left');
+      playerThreeX--;
     }
   } else {
-    playerTwoY--;
+    playerThreeY--;
   }
-  const playerTwoPosition = document.querySelector(`div[rowid="${playerTwoY}"][columnid="${playerTwoX}"]`);
-  playerTwoPosition.classList.remove('playerOne');
-  playerTwoPosition.classList.remove('playerThree');
-  playerTwoPosition.classList.remove('playerFour');
-  playerTwoPosition.classList.add('playerTwo');
+  const playerThreePosition = document.querySelector(`div[rowid="${playerThreeY}"][columnid="${playerThreeX}"]`);
+  playerThreePosition.classList.remove('playerOne');
+  playerThreePosition.classList.remove('playerThree');
+  playerThreePosition.classList.remove('playerFour');
+  playerThreePosition.classList.add('playerThree');
+  playerThreeCurrentScore++;
+
+  if (playerThreeX === crateX && playerThreeY === crateY) {
+    const squaresToRemove = document.querySelectorAll('.playerThree');
+    squaresToRemove.forEach(square => square.classList.remove('playerThree'));
+    playerThreePosition.classList.remove('crate');
+    playerThreePosition.classList.add('playerThree');
+    playerThreeBankedScore = playerThreeBankedScore + playerThreeCurrentScore;
+    console.log(playerThreeCurrentScore);
+    playerThreeCurrentScore = 0;
+    const $playerThreeScore = $('.playerThreeScorecard');
+    $playerThreeScore.html(`${playerThreeBankedScore}`);
+  }
 }
 
-function setPlayerTwoTimer() {
-//   if (playerTwo.hasClass('speedyBoots')) {
-//     setInterval(movePlayerTwo, 500);
+
+function setplayerThreeTimer() {
+//   if (playerThree.hasClass('speedyBoots')) {
+//     setInterval(moveplayerThree, 500);
 //   } else {
-  setInterval(movePlayerTwo, 1000);
+  player3MoveInterval = setInterval(moveplayerThree, 750);
 }
 
-setPlayerTwoTimer();
-//
-
-
-
-
-
-
-
-const moveset = [1, 2, 3, 4];
-
-function randNum(moveset,bannedMove){
-  var randNumber = Math.floor(Math.random()*moveset.length);
-  if(moveset[randNumber]=== bannedMove){
-    return randNum(moveset,bannedMove);
-  }else{
-    return randNumber;
-  }
-}
+setplayerThreeTimer();

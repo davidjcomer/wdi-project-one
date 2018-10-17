@@ -69,61 +69,7 @@
   font-family: 'Orbitron', sans-serif;
 }
 
-#header .playerOneScorecard {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-
-  height: 30px;
-  width: 12vw;
-  border: 1px solid darkblue;
-  border-radius: 5%;
-  margin: 2vw;
-
-  background-color: black;
-  opacity: 0.5;
-  color: limegreen;
-  font-family: 'Orbitron', sans-serif;
-}
-#header .playerTwoScorecard {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-
-  height: 30px;
-  width: 12vw;
-  border: 1px solid darkblue;
-  border-radius: 5%;
-  margin: 2vw;
-
-  background-color: black;
-  opacity: 0.5;
-  color: limegreen;
-  font-family: 'Orbitron', sans-serif;
-}
-#header .playerThreeScorecard {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-
-  height: 30px;
-  width: 12vw;
-  border: 1px solid darkblue;
-  border-radius: 5%;
-  margin: 2vw;
-
-  background-color: black;
-  opacity: 0.5;
-  color: limegreen;
-  font-family: 'Orbitron', sans-serif;
-}
-#header .playerFourScorecard {
+#header .playerScorecard {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -206,47 +152,33 @@
 
 
 .empty {
+  background-color: lavender;
 
 }
 
 .playerOne {
-  background-color: #65c6be;
-}
-
-.playerOneCurrent {
+  background-color: #96ceb4;
   background: url(PacmanVectors/GreenGhost.svg);
   background-size: contain;
 }
 
 .playerTwo {
-  background-color: #f57700;
-}
-
-.playerTwoCurrent {
   background: url(PacmanVectors/OrangeGhost.svg);
   background-size: contain;
 }
 
-
 .playerThree {
- background-color: hotpink;
-}
-
-.playerThreeCurrent {
   background: url(PacmanVectors/PinkGhost.svg);
   background-size: contain;
 }
 
 .playerFour {
-  background-color: red;
-}
-
-.playerFourCurrent {
   background: url(PacmanVectors/RedGhost.svg);
   background-size: contain;
 }
 
 .crate {
+  background-color: black;
   background: url(PacmanVectors/Cherry.svg);
   background-size: contain;
   /* background: url("/crate.png") fixed center; */

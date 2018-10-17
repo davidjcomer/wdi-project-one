@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)file:///Users/davidjcomer/development/wdi-project-one/index.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>Grid</title>
+  <link href="./Grid_files/css" rel="stylesheet">
+  <link rel="stylesheet" href="./Grid_files/style.css">
+
+  </head><body class="mainframe" id="divID">
+    <!-- <script type="text/javascript">
+    const imgCount = 3;
+        const dir = 'images/';
+        const randomCount = Math.round(Math.random() * (imgCount - 1)) + 1;
+        const images = new Array
+                images[1] = "bg-01.jpg",
+                images[2] = "bg-02.jpg",
+                images[3] = "bg-03.jpg",
+        document.getElementById("divID").style.backgroundImage = "url(" + dir + images[randomCount] + ")";
+   </script> -->
+   <!-- <div id="loadingScreen"> <span id="loadingSpan">Loading Game</span>
+   </div>
+     <div id="gameScreen"> -->
+       <header id="header">
+         <div class="playerStats">
+           <img class="playerIcon" src="./Grid_files/GreenGhost.png">
+           <div class="playerScorecard">0
+           </div>
+         </div>
+
+
+          <div class="playerStats">
+           <img class="playerIcon" src="./Grid_files/OrangeGhost.png">
+            <div class="playerScorecard">0
+            </div>
+          </div>
+
+         <div class="title">Ghosts
+         </div>
+
+         <div class="playerStats">
+           <img class="playerIcon" src="./Grid_files/PinkGhost.png">
+           <div class="playerScorecard">
+           </div>
+         </div>
+
+         <div class="playerStats">
+           <img class="playerIcon" src="./Grid_files/RedGhost.png">
+           <div class="playerScorecard">
+           </div>
+         </div>
+
+       </header>
+       <aside id="leftAside">
+         <button class="start" type="button" name="button">Start</button>
+         <div class="clock">46</div>
+         <button class="reset" type="button" name="button">Reset</button>
+       </aside>
+       <main id="container">
+       <div class="playableSquare empty playerOne" rowid="1" columnid="1"></div><div class="playableSquare empty" rowid="1" columnid="2"></div><div class="playableSquare empty" rowid="1" columnid="3"></div><div class="playableSquare empty" rowid="1" columnid="4"></div><div class="playableSquare empty" rowid="1" columnid="5"></div><div class="playableSquare empty" rowid="1" columnid="6"></div><div class="playableSquare empty" rowid="1" columnid="7"></div><div class="playableSquare empty" rowid="1" columnid="8"></div><div class="playableSquare empty" rowid="1" columnid="9"></div><div class="playableSquare empty" rowid="1" columnid="10"></div><div class="playableSquare empty" rowid="2" columnid="1"></div><div class="playableSquare empty" rowid="2" columnid="2"></div><div class="playableSquare empty" rowid="2" columnid="3"></div><div class="playableSquare empty" rowid="2" columnid="4"></div><div class="playableSquare empty" rowid="2" columnid="5"></div><div class="playableSquare empty" rowid="2" columnid="6"></div><div class="playableSquare empty" rowid="2" columnid="7"></div><div class="playableSquare empty" rowid="2" columnid="8"></div><div class="playableSquare empty" rowid="2" columnid="9"></div><div class="playableSquare empty" rowid="2" columnid="10"></div><div class="playableSquare empty" rowid="3" columnid="1"></div><div class="playableSquare empty" rowid="3" columnid="2"></div><div class="playableSquare empty" rowid="3" columnid="3"></div><div class="playableSquare empty" rowid="3" columnid="4"></div><div class="playableSquare empty" rowid="3" columnid="5"></div><div class="playableSquare empty" rowid="3" columnid="6"></div><div class="playableSquare empty" rowid="3" columnid="7"></div><div class="playableSquare empty" rowid="3" columnid="8"></div><div class="playableSquare empty" rowid="3" columnid="9"></div><div class="playableSquare empty" rowid="3" columnid="10"></div><div class="playableSquare empty" rowid="4" columnid="1"></div><div class="playableSquare empty" rowid="4" columnid="2"></div><div class="playableSquare empty" rowid="4" columnid="3"></div><div class="playableSquare empty" rowid="4" columnid="4"></div><div class="playableSquare empty" rowid="4" columnid="5"></div><div class="playableSquare empty" rowid="4" columnid="6"></div><div class="playableSquare empty" rowid="4" columnid="7"></div><div class="playableSquare empty" rowid="4" columnid="8"></div><div class="playableSquare empty" rowid="4" columnid="9"></div><div class="playableSquare empty" rowid="4" columnid="10"></div><div class="playableSquare empty" rowid="5" columnid="1"></div><div class="playableSquare empty" rowid="5" columnid="2"></div><div class="playableSquare empty" rowid="5" columnid="3"></div><div class="playableSquare empty" rowid="5" columnid="4"></div><div class="playableSquare empty" rowid="5" columnid="5"></div><div class="playableSquare empty" rowid="5" columnid="6"></div><div class="playableSquare empty" rowid="5" columnid="7"></div><div class="playableSquare empty" rowid="5" columnid="8"></div><div class="playableSquare empty" rowid="5" columnid="9"></div><div class="playableSquare empty" rowid="5" columnid="10"></div><div class="playableSquare empty" rowid="6" columnid="1"></div><div class="playableSquare empty" rowid="6" columnid="2"></div><div class="playableSquare empty" rowid="6" columnid="3"></div><div class="playableSquare empty" rowid="6" columnid="4"></div><div class="playableSquare empty" rowid="6" columnid="5"></div><div class="playableSquare empty" rowid="6" columnid="6"></div><div class="playableSquare empty" rowid="6" columnid="7"></div><div class="playableSquare empty" rowid="6" columnid="8"></div><div class="playableSquare empty" rowid="6" columnid="9"></div><div class="playableSquare empty" rowid="6" columnid="10"></div><div class="playableSquare empty" rowid="7" columnid="1"></div><div class="playableSquare empty" rowid="7" columnid="2"></div><div class="playableSquare empty" rowid="7" columnid="3"></div><div class="playableSquare empty" rowid="7" columnid="4"></div><div class="playableSquare empty" rowid="7" columnid="5"></div><div class="playableSquare empty" rowid="7" columnid="6"></div><div class="playableSquare empty" rowid="7" columnid="7"></div><div class="playableSquare empty" rowid="7" columnid="8"></div><div class="playableSquare empty" rowid="7" columnid="9"></div><div class="playableSquare empty" rowid="7" columnid="10"></div><div class="playableSquare empty" rowid="8" columnid="1"></div><div class="playableSquare empty" rowid="8" columnid="2"></div><div class="playableSquare empty" rowid="8" columnid="3"></div><div class="playableSquare empty" rowid="8" columnid="4"></div><div class="playableSquare empty" rowid="8" columnid="5"></div><div class="playableSquare empty" rowid="8" columnid="6"></div><div class="playableSquare empty" rowid="8" columnid="7"></div><div class="playableSquare empty" rowid="8" columnid="8"></div><div class="playableSquare empty" rowid="8" columnid="9"></div><div class="playableSquare empty" rowid="8" columnid="10"></div><div class="playableSquare empty" rowid="9" columnid="1"></div><div class="playableSquare empty playerTwo" rowid="9" columnid="2"></div><div class="playableSquare empty" rowid="9" columnid="3"></div><div class="playableSquare empty" rowid="9" columnid="4"></div><div class="playableSquare empty" rowid="9" columnid="5"></div><div class="playableSquare empty" rowid="9" columnid="6"></div><div class="playableSquare empty" rowid="9" columnid="7"></div><div class="playableSquare empty" rowid="9" columnid="8"></div><div class="playableSquare empty" rowid="9" columnid="9"></div><div class="playableSquare empty" rowid="9" columnid="10"></div><div class="playableSquare empty" rowid="10" columnid="1"></div><div class="playableSquare empty" rowid="10" columnid="2"></div><div class="playableSquare empty" rowid="10" columnid="3"></div><div class="playableSquare empty" rowid="10" columnid="4"></div><div class="playableSquare empty" rowid="10" columnid="5"></div><div class="playableSquare empty" rowid="10" columnid="6"></div><div class="playableSquare empty" rowid="10" columnid="7"></div><div class="playableSquare empty" rowid="10" columnid="8"></div><div class="playableSquare empty" rowid="10" columnid="9"></div><div class="playableSquare empty" rowid="10" columnid="10"></div></main>
+       <aside id="rightAside">
+       </aside>
+     <!-- </div> -->
+
+    <script src="./Grid_files/jquery.min.js" charset="utf-8"></script>
+    <script src="./Grid_files/app3.js" charset="utf-8"></script>
+  
+  
+</body></html>
