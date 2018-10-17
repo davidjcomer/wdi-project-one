@@ -1,0 +1,106 @@
+.rightToLeft {
+  height: 150px;
+  width: 100vw;
+  background: url(PacmanVectors/RightToLeft.gif) no-repeat;
+  background-size: cover;
+}
+
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  font-family:
+
+  height: 400px;
+  width: 100vw;
+
+  background-color: black;
+}
+
+.button {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  width: 50vs;
+  border-radius: 20%
+}
+
+.leftToRight {
+  height: 150px;
+  width: 100vw;
+  background: url(PacmanVectors/LeftToRight.gif) no-repeat;
+  background-size: cover;
+}
+
+.leftpanel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  width: 100px;
+}
+
+.rightpanel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  width: 100px;
+}
+
+.greengif {
+  height: 50px;
+  width: 50px;
+  background: url(PacmanVectors/greengif.gif) no-repeat;
+  background-size: cover;
+}
+
+.chooseOne {
+  height: 50px;
+  width: 200px;
+  background-color: white;
+}
+
+.orangegif {
+  height: 50px;
+  width: 50px;
+  background: url(PacmanVectors/orangegif.gif) no-repeat;
+  background-size: cover;
+}
+
+.chooseTwo {
+  height: 50px;
+  width: 200px;
+  background-color: white;
+}
+
+.pinkgif {
+  height: 50px;
+  width: 50px;
+  background: url(PacmanVectors/pinkgif.gif) no-repeat;
+  background-size: cover;
+}
+
+.chooseThree {
+  height: 50px;
+  width: 200px;
+  background-color: white;
+}
+
+.redgif {
+  height: 50px;
+  width: 50px;
+  background: url(PacmanVectors/redgif.gif) no-repeat;
+  background-size: cover;
+}
+
+.chooseFour {
+  height: 50px;
+  width: 200px;
+  background-color: white;
+}

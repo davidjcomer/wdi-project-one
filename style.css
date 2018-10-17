@@ -1,11 +1,12 @@
 .mainframe {
   background-color: black;
-  display:flex;
+  display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  background: url(PacmanVectors/stars.gif);
+  background: url(PacmanVectors/NightSky.gif) no-repeat;
   background-size: cover;
+  animation: animatedBackground 5s linear infinite;
 }
 
 
@@ -22,6 +23,7 @@
   height: 160px;
 
   background-size: length;
+  color: #FFEE00;
   font-family: 'Orbitron', sans-serif;
 }
 
@@ -47,7 +49,7 @@
   align-items: center;
   width: 24vw;
   height: 100px;
-  color: #FFEE00;
+  /* color: #FFEE00; */
   font-size: 60px;
   background: url(PacmanVectors/dot.svg);
   border: none;
@@ -61,14 +63,37 @@
   align-items: center;
   text-align: center;
 
-  height: 40px;
-  animation: grow 2s infinite;
+  height: 60px;
+  width: 60px;
+  border: none;
 
-  color: #FFEE00;
+  /* color: #FFEE00; */
   font-family: 'Orbitron', sans-serif;
-  background: url(PacmanVectors/dot.svg);
 }
 
+.GreenGhost {
+background: url(PacmanVectors/GreenGhost.png) no-repeat;
+background-position: center;
+animation: grow 2s infinite;
+}
+
+.OrangeGhost {
+background: url(PacmanVectors/OrangeGhost.png) no-repeat;
+background-position: center;
+animation: grow 2s infinite;
+}
+
+.PinkGhost {
+background: url(PacmanVectors/PinkGhost.png) no-repeat;
+background-position: center;
+animation: grow 2s infinite;
+}
+
+.RedGhost {
+background: url(PacmanVectors/RedGhost.png) no-repeat;
+background-position: center;
+animation: grow 2s infinite;
+}
 
 #header .playerOneScorecard {
   display: flex;
@@ -84,8 +109,7 @@
   border: none;
 
   background: url(PacmanVectors/dot.svg);
-  color: #FFEE00;
-  font-family: 'Orbitron', sans-serif;
+  font-size: 40px;
 }
 
 #header .playerTwoScorecard {
@@ -102,8 +126,7 @@
   border: none;
 
   background: url(PacmanVectors/dot.svg);
-  color: #FFEE00;
-  font-family: 'Orbitron', sans-serif;
+  font-size: 40px;
 }
 
 #header .playerThreeScorecard {
@@ -120,8 +143,7 @@
   border: none;
 
   background: url(PacmanVectors/dot.svg);
-  color: #FFEE00;
-  font-family: 'Orbitron', sans-serif;
+  font-size: 40px;
 }
 #header .playerFourScorecard {
   display: flex;
@@ -137,8 +159,7 @@
   border: none;
 
   background: url(PacmanVectors/dot.svg);
-  color: #FFEE00;
-  font-family: 'Orbitron', sans-serif;
+  font-size: 40px;
 }
 
 #leftAside {
@@ -149,6 +170,7 @@
 
   height: 500px;
   width: 20vw;
+  color: #FFEE00;
 
   font-family: 'Orbitron', sans-serif;
 }
@@ -171,7 +193,6 @@
   text-align: center;
 
   font-size: 30px;
-  color: #FFEE00;
 
   height: 160px;
   width: 160px;
@@ -197,7 +218,7 @@
 
   height: 500px;
   width: 20vw;
-
+  color: #FFEE00;
   font-family: 'Orbitron', sans-serif;
 }
 
@@ -224,6 +245,7 @@
 .playerTwoCurrent {
   background: url(PacmanVectors/OrangeGhost.svg);
   background-size: contain;
+  animation: avatarPulse 2.3s infinite;
 }
 
 .playerThree {
@@ -233,6 +255,7 @@
 .playerThreeCurrent {
   background: url(PacmanVectors/PinkGhost.svg);
   background-size: contain;
+  animation: avatarPulse 1.7s infinite;
 }
 
 .playerFour {
@@ -242,21 +265,19 @@
 .playerFourCurrent {
   background: url(PacmanVectors/RedGhost.svg);
   background-size: contain;
+  animation: avatarPulse 1.5s infinite;
 }
 
-.crate {
+.cherry {
   background: url(PacmanVectors/Cherry.svg);
   background-size: contain;
 }
 
-.secondCrate {
-  background: url(PacmanVectors/Cherry.svg);
+.turboStrawberry {
+  background: url(PacmanVectors/Strawberry.svg);
   background-size: contain;
 }
 
-.speedyBoots {
-  background-color: red;
-}
 
 div {
   height: 9%;
@@ -264,34 +285,40 @@ div {
   border: 2px solid darkblue;
   background: url(PacmanVectors/dot.svg);
   border-radius: 15%;
+  background-position: center;
 }
+
 
 @keyframes grow {
   0% {
-    height: 40px;
-    width: 40px;
+    background-size: 40px 40px;
   }
   50% {
-    height: 60px;
-    width: 60px;
+    background-size: 60px 60px;
+    background-position: center;
   }
   100% {
-    height: 40px;
-    width: 40px;
+    background-size: 40px 40px;
   }
 }
 
 @keyframes avatarPulse {
   0% {
-    height: 9%;
-    width: 9%;
+    background-size: 49px 49px;
   }
   50% {
-    height: 11%;
-    width: 11%;
+    background-size: 60px 60px;
+    background-position: center;
   }
   100% {
-    height: 9%;
-    width: 9%;
+    background-size: 49px 49px;
+  }
+}
+
+@keyframes animatedBackground {
+	from {
+    background-position: 0 0;
+  }
+  to { background-position: 100% 0;
   }
 }

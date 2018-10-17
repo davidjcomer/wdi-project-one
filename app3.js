@@ -21,33 +21,31 @@ let playerFourX = 10;
 let playerFourY = 1;
 let playerFourBankedScore = 0;
 let playerFourCurrentScore = 0;
-let crateX;
-let crateY;
-// let speedyBootsX;
-// let speedyBootsY;
+let cherryX;
+let cherryY;
+let turboStrawberryX;
+let turboStrawberryY;
 const $clock = $('.clock');
 const $start = $('.start');
 const $reset = $('.reset');
-let time = 60.00;
+let time = 90.00;
 let intervalId;
+const turboTimeout = 5000;
 
 const $gridSpace = $('#container');
 let playerOneMoveInterval;
 let playerTwoMoveInterval;
 let playerThreeMoveInterval;
 let playerFourMoveInterval;
-let spawnCrateInterval;
+let spawncherryInterval;
+let spawnTurboStrawberryInterval;
 
-// const noLeftMove = [Y++, X++, Y--];
-// const noUpMove = [X--, X++, Y--];
-// const noRightMove = ['X--', 'Y++', 'Y--'];
-// const noDownMove = [X--, Y++, X++];
-// const leftUpMoves = [X--, Y++];
-// const UpRightMoves= [Y++, X++];
-// const RightDownMoves = [X++, Y--];
-// const DownLeftMoves = [Y--, X--];
-// const LeftRightMoves = [X--, X++];
-// const UpDownMoves = [Y++,Y--];
+const audioButton = document.querySelector('.music');
+const audio = document.querySelector('audio');
+
+audioButton.addEventListener('click', () => {
+  audio.play();
+});
 
 //****************************//
 //          Game Menu         //
@@ -79,7 +77,7 @@ function checkForWin() {
 function setPlayerOneTimer() {
   playerOneMoveInterval = setInterval(movePlayerOne, 750);
   //clearInterval(playerOneMoveInterval);
-  //   if (playerTwo.hasClass('speedyBoots')) {
+  //   if (playerTwo.hasClass('turboStrawberry')) {
   //     setInterval(movePlayerTwo, 500);
   //   } else {
 }
@@ -88,11 +86,47 @@ function setPlayerTwoTimer() {
   playerTwoMoveInterval = setInterval(movePlayerTwo, 750);
 }
 function setPlayerThreeTimer() {
-  playerThreeMoveInterval = setInterval(moveplayerThree, 750);
+  playerThreeMoveInterval = setInterval(movePlayerThree, 750);
 }
 function setPlayerFourTimer() {
-  playerFourMoveInterval = setInterval(moveplayerFour, 750);
+  playerFourMoveInterval = setInterval(movePlayerFour, 750);
 }
+
+function playerOneTurbo() {
+  clearInterval(playerOneMoveInterval);
+  const playerOneTurboInterval = setInterval(movePlayerOne, 325);
+  setTimeout(() => {
+    clearInterval(playerOneTurboInterval);
+    setPlayerOneTimer();
+  }, turboTimeout);
+}
+
+function playerTwoTurbo() {
+  clearInterval(playerTwoMoveInterval);
+  const playerTwoTurboInterval = setInterval(movePlayerTwo, 325);
+  setTimeout(() => {
+    clearInterval(playerTwoTurboInterval);
+    setPlayerTwoTimer();
+  }, turboTimeout);
+}
+
+function playerThreeTurbo() {
+  clearInterval(playerThreeMoveInterval);
+  const playerThreeTurboInterval = setInterval(movePlayerThree, 325);
+  setTimeout(() => {
+    clearInterval(playerThreeTurboInterval);
+    setPlayerThreeTimer();
+  }, turboTimeout);
+}
+function playerFourTurbo() {
+  clearInterval(playerFourMoveInterval);
+  const playerFourTurboInterval = setInterval(movePlayerFour, 325);
+  setTimeout(() => {
+    clearInterval(playerFourTurboInterval);
+    setPlayerFourTimer();
+  }, turboTimeout);
+}
+
 
 //****************************//
 //     Loading the Grid       //
@@ -128,25 +162,25 @@ const $playableSquares = document.querySelectorAll('.playableSquare');
 //     Start Button Logic     //
 //****************************//
 $start.click(function startGame(){
-  time = 60;
+  time = 90;
   setPlayerOneTimer();
   setPlayerTwoTimer();
   setPlayerThreeTimer();
   setPlayerFourTimer();
-  setCrateSpawnTimer();
-  spawnCrate();
+  setcherrySpawnTimer();
+  spawncherry();
+  setTurboStrawberrySpawnTimer();
   intervalId = setInterval(function () {
     time = time - 1;
     $clock.html(`${time}`);
     if (time === 0) {
       clearInterval(intervalId);
-      $('div').removeClass('playerOne playerTwo playerThree playerFour crate');
-      $('div').addClass('empty');
       clearInterval(playerOneMoveInterval);
       clearInterval(playerTwoMoveInterval);
       clearInterval(playerThreeMoveInterval);
       clearInterval(playerFourMoveInterval);
-      clearInterval(spawnCrateInterval);
+      clearInterval(spawncherryInterval);
+      clearInterval(spawnTurboStrawberryInterval);
       checkForWin();
     }
   }, 1000);
@@ -155,25 +189,26 @@ $start.click(function startGame(){
 //****************************//
 //      Reset Button Logic    //
 //****************************//
-const $playerOnePosition = $(`div[rowid="${playerOneY}"][columnid="${playerOneX}"]`);
-const $playerTwoPosition = $(`div[rowid="${playerTwoY}"][columnid="${playerTwoX}"]`);
-const $playerThreePosition = $(`div[rowid="${playerThreeY}"][columnid="${playerThreeX}"]`);
-const $playerFourPosition = $(`div[rowid="${playerFourY}"][columnid="${playerFourX}"]`);
+const $playerOnePosition = document.querySelector(`div[rowid="${playerOneY}"][columnid="${playerOneX}"]`);
+const $playerTwoPosition = document.querySelector(`div[rowid="${playerTwoY}"][columnid="${playerTwoX}"]`);
+const $playerThreePosition = document.querySelector(`div[rowid="${playerThreeY}"][columnid="${playerThreeX}"]`);
+const $playerFourPosition = document.querySelector(`div[rowid="${playerFourY}"][columnid="${playerFourX}"]`);
 
 $reset.click(function resetGame(){
-  $('div').removeClass('playerOne playerTwo playerThree playerFour playerOneCurrent playerTwoCurrent playerThreeCurrent playerFourCurrent crate');
+  $('div').removeClass('playerOne playerTwo playerThree playerFour playerOneCurrent playerTwoCurrent playerThreeCurrent playerFourCurrent cherry turboStrawberry');
   $('div').addClass('empty');
   clearInterval(playerOneMoveInterval);
   clearInterval(playerTwoMoveInterval);
   clearInterval(playerThreeMoveInterval);
   clearInterval(playerFourMoveInterval);
-  clearInterval(spawnCrateInterval);
+  clearInterval(spawncherryInterval);
+  clearInterval(spawnTurboStrawberryInterval);
   clearInterval(intervalId);
   playerOneBankedScore = 0;
   playerTwoBankedScore = 0;
   playerThreeBankedScore = 0;
   playerFourBankedScore = 0;
-  time = 60;
+  time = 90;
   $clock.html(time);
   playerOneX = 1;
   playerOneY = 1;
@@ -191,49 +226,51 @@ $reset.click(function resetGame(){
 
 
 //****************************//
-//       Spawning Crate       //
+//       Spawning Cherry       //
 //****************************//
 
-function spawnCrate() {
+function spawncherry() {
   $playableSquares.forEach(square => {
-    if (square.classList.contains('crate')) {
-      square.classList.remove('crate');
+    if (square.classList.contains('cherry')) {
+      square.classList.remove('cherry');
     }
   });
-  crateX = Math.ceil((Math.random() * 10));
-  crateY = Math.ceil((Math.random() * 10));
-  const cratePosition = document.querySelector(`div[rowid="${crateY}"][columnid="${crateX}"]`);
-  if (cratePosition.classList.contains('playerOne')) {
-    cratePosition.classList.remove('playerOne');
-  } else if (cratePosition.classList.contains('playerTwo')) {
-    cratePosition.classList.remove('playerTwo');
-  }
-  cratePosition.classList.add('crate');
+  cherryX = Math.ceil((Math.random() * 10));
+  cherryY = Math.ceil((Math.random() * 10));
+  const cherryPosition = document.querySelector(`div[rowid="${cherryY}"][columnid="${cherryX}"]`);
+  // if (cherryPosition.classList.contains('playerOne')) {
+  //   cherryPosition.classList.remove('playerOne');
+  // } else if (cherryPosition.classList.contains('playerTwo')) {
+  //   cherryPosition.classList.remove('playerTwo');
+  // }
+  cherryPosition.classList.add('cherry');
 }
-spawnCrate();
+spawncherry();
 
-function setCrateSpawnTimer() {
-  spawnCrateInterval = setInterval(spawnCrate, 5000);
+function setcherrySpawnTimer() {
+  spawncherryInterval = setInterval(spawncherry, 10000);
 }
-setCrateSpawnTimer();
+setcherrySpawnTimer();
 
 
 //****************************//
-//   Spawning Speedy Boots    //
+//  Spawning turboStrawberry  //
 //****************************//
 
-// function spawnSpeedyBoots() {
-//   crateX = Math.ceil((Math.random() * 10));
-//   crateY = Math.ceil((Math.random() * 10));
-//   const speedyBootsPosition = document.querySelector(`div[rowid="${speedyBootsY}"][columnid="${speedyBootsX}"]`);
-//   speedyBootsPosition.classList.add('crate');
-//   console.log(speedyBootsPosition);
-// }
-// spawnSpeedyBoots();
-// function setSpeedyBootsSpawnTimer() {
-//   setInterval(spawnSpeedyBoots, 10000);
-// }
-// setSpeedyBootsSpawnTimer();
+function spawnTurboStrawberry() {
+  $playableSquares.forEach(square => {
+    square.classList.remove('turboStrawberry');
+  });
+  turboStrawberryX = Math.ceil((Math.random() * 10));
+  turboStrawberryY = Math.ceil((Math.random() * 10));
+  const turboStrawberryPosition = document.querySelector(`div[rowid="${turboStrawberryY}"][columnid="${turboStrawberryX}"]`);
+  turboStrawberryPosition.classList.add('turboStrawberry');
+}
+// spawnTurboStrawberry();
+
+function setTurboStrawberrySpawnTimer() {
+  spawnTurboStrawberryInterval = setInterval(spawnTurboStrawberry, 7500);
+}
 
 
 
@@ -300,26 +337,25 @@ function movePlayerOne() {
   playerOneCurrentScore++;
 
 
-  //    Crate Collision Logic   //
-  if (playerOneX === crateX && playerOneY === crateY) {
+  //    cherry Collision Logic   //
+  if (playerOneX === cherryX && playerOneY === cherryY) {
     const squaresToRemove = document.querySelectorAll('.playerOne');
     squaresToRemove.forEach(square => square.classList.remove('playerOne'));
-    $playerOnePosition.classList.remove('crate');
+    $playerOnePosition.classList.remove('cherry');
     playerOneBankedScore = playerOneBankedScore + playerOneCurrentScore;
     playerOneCurrentScore = 0;
     const $playerOneScore = $('.playerOneScorecard');
     $playerOneScore.html(`${playerOneBankedScore}`);
     $playerOnePosition.classList.add('playerOne');
   }
+
+  //    Strawberry Collision Logic   //
+  console.log('checking for strawberry', playerOneX, playerOneY, turboStrawberryX, turboStrawberryY);
+  if (playerOneX === turboStrawberryX && playerOneY === turboStrawberryY) {
+    $playerOnePosition.classList.remove('turboStrawberry');
+    playerOneTurbo();
+  }
 }
-
-//      Set playerOne Timer     //
-// function setPlayerOneTimer() {
-//   playerOneMoveInterval = setInterval(movePlayerOne, 750);
-//   //clearInterval(playerOneMoveInterval);
-// }
-// setPlayerOneTimer();
-
 
 //****************************//
 // playerTwo Movement Logic   //
@@ -341,26 +377,6 @@ function movePlayerTwo() {
   } else if (playerTwoY === 1) {
     playerTwoY++;
 
-
-    //***WHAT HAVE I DONE:
-    //the computer is encouraged to occupy squares with the class empty and player One
-    //then we say, if the squares immeditately to the left, right, and upside of you are coloured playerTwo, go down. etc. etc.
-    // Preventative movement logic //
-
-    //if all 4 have class player 1 or empty, generate randomly from fullMoveset Array
-    //if L/U/R have class player 1 or empty, but Down has class player two, generate from noDownMove Array
-    //if U/R/D have class player 1 or empty, but Left has class player two, generate from noLeftMove Array
-    //if R/D/L have class player 1 or empty, but Up has class playerTwo, genenrate from noUpMove Array
-    //if D/L/U have class player 1 or empty, but Right has class playerTwo, genenrate from noRightMove Array
-    //if L/U have class player 1 or empty, but R/D has class playerTwo, genenrate from L/U Array
-    //if U/R have class player 1 or empty, but D/L has class playerTwo, genenrate from U/R Array
-    //if R/D have class player 1 or empty, but L/U has class playerTwo, genenrate from R/D Array
-    //if D/L have class player 1 or empty, but U/R has class playerTwo, genenrate from U/R Array
-    //if L/R have class player 1 or empty, but U/D has class playerTwo, genenrate from l/R Array
-    //if U/D have class player 1 or empty, but L/R has class playerTwo, genenrate from U/D Array
-
-
-  // if ((PNTL contains pO || e) && (PNTU contains pO || e)
   } else if ((potentialNewTileUp.classList.contains('playerOne') || potentialNewTileUp.classList.contains('playerThree') || potentialNewTileUp.classList.contains('playerFour') || potentialNewTileLeft.classList.contains('empty')) && playerTwoX > 1) {
     playerTwoX--;
   } else if (playerTwoX === 1) {
@@ -410,32 +426,31 @@ function movePlayerTwo() {
   $playerTwoPosition.classList.remove('empty');
   playerTwoCurrentScore++;
 
-  if (playerTwoX === crateX && playerTwoY === crateY) {
+  //    cherry Collision Logic   //
+  if (playerTwoX === cherryX && playerTwoY === cherryY) {
     const squaresToRemove = document.querySelectorAll('.playerTwo');
     squaresToRemove.forEach(square => square.classList.remove('playerTwo'));
-    $playerTwoPosition.classList.remove('crate');
+    $playerTwoPosition.classList.remove('cherry');
     $playerTwoPosition.classList.add('playerTwo');
     playerTwoBankedScore = playerTwoBankedScore + playerTwoCurrentScore;
     playerTwoCurrentScore = 0;
     const $playerTwoScore = $('.playerTwoScorecard');
     $playerTwoScore.html(`${playerTwoBankedScore}`);
   }
+
+  //    Strawberry Collision Logic   //
+  if (playerTwoX === turboStrawberryX && playerTwoY === turboStrawberryY) {
+    console.log('player two has eaten the turbo strawberry');
+    $playerTwoPosition.classList.remove('turboStrawberry');
+    $playerTwoPosition.classList.add('playerTwo');
+    playerTwoTurbo();
+  }
 }
-
-// function setPlayerTwoTimer() {
-// //   if (playerTwo.hasClass('speedyBoots')) {
-// //     setInterval(movePlayerTwo, 500);
-// //   } else {
-//   playerTwoMoveInterval = setInterval(movePlayerTwo, 750);
-// }
-//
-// setPlayerTwoTimer();
-
 
 //****************************//
 // playerThree Movement Logic   //
 //****************************//
-function moveplayerThree() {
+function movePlayerThree() {
   const potentialNewTileLeft = document.querySelector(`div[rowid="${playerThreeY}"][columnid="${playerThreeX - 1}"]`);
   const potentialNewTileUp = document.querySelector(`div[rowid="${playerThreeY + 1}"][columnid="${playerThreeX}"]`);
   const potentialNewTileRight = document.querySelector(`div[rowid="${playerThreeY}"][columnid="${playerThreeX + 1}"]`);
@@ -496,10 +511,10 @@ function moveplayerThree() {
   playerThreeCurrentScore++;
 
 
-  if (playerThreeX === crateX && playerThreeY === crateY) {
+  if (playerThreeX === cherryX && playerThreeY === cherryY) {
     const squaresToRemove = document.querySelectorAll('.playerThree');
     squaresToRemove.forEach(square => square.classList.remove('playerThree'));
-    $playerThreePosition.classList.remove('crate');
+    $playerThreePosition.classList.remove('cherry');
     $playerThreePosition.classList.add('playerThree');
     playerThreeBankedScore = playerThreeBankedScore + playerThreeCurrentScore;
     console.log(playerThreeCurrentScore);
@@ -507,23 +522,20 @@ function moveplayerThree() {
     const $playerThreeScore = $('.playerThreeScorecard');
     $playerThreeScore.html(`${playerThreeBankedScore}`);
   }
+
+  //    Strawberry Collision Logic   //
+  if (playerThreeX === turboStrawberryX && playerThreeY === turboStrawberryY) {
+    console.log('player three has eaten the turbo strawberry');
+    $playerThreePosition.classList.remove('turboStrawberry');
+    $playerThreePosition.classList.add('playerThree');
+    playerThreeTurbo();
+  }
 }
-
-
-// function setPlayerThreeTimer() {
-// //   if (playerThree.hasClass('speedyBoots')) {
-// //     setInterval(moveplayerThree, 500);
-// //   } else {
-//   playerThreeMoveInterval = setInterval(moveplayerThree, 750);
-// }
-//
-// setPlayerThreeTimer();
-
 
 //****************************//
 // playerFour Movement Logic   //
 //****************************//
-function moveplayerFour() {
+function movePlayerFour() {
   const move = Math.floor((Math.random() * 4));
 
   // Rudimentary Barrier logic //
@@ -591,24 +603,22 @@ function moveplayerFour() {
   $playerFourPosition.classList.remove('empty');
   playerFourCurrentScore++;
 
-  if (playerFourX === crateX && playerFourY === crateY) {
+  if (playerFourX === cherryX && playerFourY === cherryY) {
     const squaresToRemove = document.querySelectorAll('.playerFour');
     squaresToRemove.forEach(square => square.classList.remove('playerFour'));
-    $playerFourPosition.classList.remove('crate');
+    $playerFourPosition.classList.remove('cherry');
     $playerFourPosition.classList.add('playerFour');
     playerFourBankedScore = playerFourBankedScore + playerFourCurrentScore;
     playerFourCurrentScore = 0;
     const $playerFourScore = $('.playerFourScorecard');
     $playerFourScore.html(`${playerFourBankedScore}`);
   }
+
+  //    Strawberry Collision Logic   //
+  if (playerFourX === turboStrawberryX && playerFourY === turboStrawberryY) {
+    console.log('player four has eaten the turbo strawberry');
+    $playerFourPosition.classList.remove('turboStrawberry');
+    $playerFourPosition.classList.add('playerFour');
+    playerFourTurbo();
+  }
 }
-
-
-// function setPlayerFourTimer() {
-// //   if (playerFour.hasClass('speedyBoots')) {
-// //     setInterval(moveplayerFour, 500);
-// //   } else {
-//   playerFourMoveInterval = setInterval(moveplayerFour, 750);
-// }
-//
-// setPlayerFourTimer();
