@@ -101,19 +101,19 @@ function loadGrid() {
   for (let rows = 0; rows < 10; rows++) {
     for (let columns = 0; columns < 10; columns++) {
       const emptyTile = document.createElement('div');
-      emptyTile.classList.add('playableSquare');
-      emptyTile.classList.add('empty');
+      emptyTile.addClass('playableSquare');
+      emptyTile.addClass('empty');
       if (columns === (playerOneX - 1) && rows === (playerOneY - 1)) {
-        emptyTile.classList.add('playerOneCurrent');
+        emptyTile.addClass('playerOneCurrent');
       }
       if (columns === (playerTwoX - 1) && rows === (playerTwoY - 1)) {
-        emptyTile.classList.add('playerTwoCurrent');
+        emptyTile.addClass('playerTwoCurrent');
       }
       if (columns === (playerThreeX - 1) && rows === (playerThreeY - 1)) {
-        emptyTile.classList.add('playerThreeCurrent');
+        emptyTile.addClass('playerThreeCurrent');
       }
       if (columns === (playerFourX - 1) && rows === (playerFourY - 1)) {
-        emptyTile.classList.add('playerFourCurrent');
+        emptyTile.addClass('playerFourCurrent');
       }
       $gridSpace.append(emptyTile);
       emptyTile.setAttribute('rowid', rows + 1);
@@ -122,7 +122,7 @@ function loadGrid() {
   }
 }
 loadGrid();
-const $playableSquares = document.querySelectorAll('.playableSquare');
+const $playableSquares = $('.playableSquare');
 
 //****************************//
 //     Start Button Logic     //
@@ -140,7 +140,11 @@ $start.click(function startGame(){
     $clock.html(`${time}`);
     if (time === 0) {
       clearInterval(intervalId);
-      $('div').removeClass('playerOne playerTwo playerThree playerFour crate');
+      $('div').removeClass('playerOne ');
+      $('div').removeClass('playerTwo ');
+      $('div').removeClass('playerThree');
+      $('div').removeClass('playerFour');
+      $('div').removeClass('crate');
       $('div').addClass('empty');
       clearInterval(playerOneMoveInterval);
       clearInterval(playerTwoMoveInterval);
@@ -177,16 +181,16 @@ $reset.click(function resetGame(){
   $clock.html(time);
   playerOneX = 1;
   playerOneY = 1;
-  $playerOnePosition.classList.add('playerOneCurrent');
+  $playerOnePosition.addClass('playerOneCurrent');
   playerTwoX = 10;
   playerTwoY = 10;
-  $playerTwoPosition.classList.add('playerTwoCurrent');
+  $playerTwoPosition.addClass('playerTwoCurrent');
   playerThreeX = 1;
   playerThreeY = 10;
-  $playerThreePosition.classList.add('playerThreeCurrent');
+  $playerThreePosition.addClass('playerThreeCurrent');
   playerFourX = 10;
   playerFourY = 1;
-  $playerFourPosition.classList.add('playerFourCurrent');
+  $playerFourPosition.addClass('playerFourCurrent');
 });
 
 
@@ -196,19 +200,19 @@ $reset.click(function resetGame(){
 
 function spawnCrate() {
   $playableSquares.forEach(square => {
-    if (square.classList.contains('crate')) {
-      square.classList.remove('crate');
+    if (square.hasClass('crate')) {
+      square.removeClass('crate');
     }
   });
   crateX = Math.ceil((Math.random() * 10));
   crateY = Math.ceil((Math.random() * 10));
-  const cratePosition = document.querySelector(`div[rowid="${crateY}"][columnid="${crateX}"]`);
-  if (cratePosition.classList.contains('playerOne')) {
-    cratePosition.classList.remove('playerOne');
-  } else if (cratePosition.classList.contains('playerTwo')) {
-    cratePosition.classList.remove('playerTwo');
+  const $cratePosition = $(`div[rowid="${crateY}"][columnid="${crateX}"]`);
+  if ($cratePosition.hasClass('playerOne')) {
+    $cratePosition.removeClass('playerOne');
+  } else if ($cratePosition.hasClass('playerTwo')) {
+    $cratePosition.removeClass('playerTwo');
   }
-  cratePosition.classList.add('crate');
+  $cratePosition.addClass('crate');
 }
 spawnCrate();
 
@@ -226,7 +230,7 @@ setCrateSpawnTimer();
 //   crateX = Math.ceil((Math.random() * 10));
 //   crateY = Math.ceil((Math.random() * 10));
 //   const speedyBootsPosition = document.querySelector(`div[rowid="${speedyBootsY}"][columnid="${speedyBootsX}"]`);
-//   speedyBootsPosition.classList.add('crate');
+//   speedyBootsPosition.addClass('crate');
 //   console.log(speedyBootsPosition);
 // }
 // spawnSpeedyBoots();
@@ -285,31 +289,31 @@ function movePlayerOne() {
   PlayerOneKeydown = null;
 
   //       playerOne Score/Class Logic      //
-  const $playerOnePosition = document.querySelector(`div[rowid="${playerOneY}"][columnid="${playerOneX}"]`);
+  const $playerOnePosition = $(`div[rowid="${playerOneY}"][columnid="${playerOneX}"]`);
   $playableSquares.forEach(playableSquare => {
-    if (playableSquare.classList.contains('playerOneCurrent')) {
-      playableSquare.classList.remove('playerOneCurrent');
+    if (playableSquare.hasClass('playerOneCurrent')) {
+      playableSquare.removeClass('playerOneCurrent');
     }
   });
-  $playerOnePosition.classList.add('playerOneCurrent');
-  $playerOnePosition.classList.add('playerOne');
-  $playerOnePosition.classList.remove('playerTwo');
-  $playerOnePosition.classList.remove('playerThree');
-  $playerOnePosition.classList.remove('playerFour');
-  $playerOnePosition.classList.remove('empty');
+  $playerOnePosition.addClass('playerOneCurrent');
+  $playerOnePosition.addClass('playerOne');
+  $playerOnePosition.removeClass('playerTwo');
+  $playerOnePosition.removeClass('playerThree');
+  $playerOnePosition.removeClass('playerFour');
+  $playerOnePosition.removeClass('empty');
   playerOneCurrentScore++;
 
 
   //    Crate Collision Logic   //
   if (playerOneX === crateX && playerOneY === crateY) {
-    const squaresToRemove = document.querySelectorAll('.playerOne');
-    squaresToRemove.forEach(square => square.classList.remove('playerOne'));
-    $playerOnePosition.classList.remove('crate');
+    const $squaresToRemove = document.querySelectorAll('.playerOne');
+    $squaresToRemove.forEach(square => square.removeClass('playerOne'));
+    $playerOnePosition.removeClass('crate');
     playerOneBankedScore = playerOneBankedScore + playerOneCurrentScore;
     playerOneCurrentScore = 0;
     const $playerOneScore = $('.playerOneScorecard');
     $playerOneScore.html(`${playerOneBankedScore}`);
-    $playerOnePosition.classList.add('playerOne');
+    $playerOnePosition.addClass('playerOne');
   }
 }
 
@@ -325,10 +329,10 @@ function movePlayerOne() {
 // playerTwo Movement Logic   //
 //****************************//
 function movePlayerTwo() {
-  const potentialNewTileLeft = document.querySelector(`div[rowid="${playerTwoY}"][columnid="${playerTwoX - 1}"]`);
-  const potentialNewTileUp = document.querySelector(`div[rowid="${playerTwoY + 1}"][columnid="${playerTwoX}"]`);
-  const potentialNewTileRight = document.querySelector(`div[rowid="${playerTwoY}"][columnid="${playerTwoX + 1}"]`);
-  const potentialNewTileDown = document.querySelector(`div[rowid="${playerTwoY - 1}"][columnid="${playerTwoX}"]`);
+  const $potentialNewTileLeft = $(`div[rowid="${playerTwoY}"][columnid="${playerTwoX - 1}"]`);
+  const $potentialNewTileUp = $(`div[rowid="${playerTwoY + 1}"][columnid="${playerTwoX}"]`);
+  const $potentialNewTileRight = $(`div[rowid="${playerTwoY}"][columnid="${playerTwoX + 1}"]`);
+  const $potentialNewTileDown = $(`div[rowid="${playerTwoY - 1}"][columnid="${playerTwoX}"]`);
   const move = Math.floor((Math.random() * 4));
 
   // Rudimentary Barrier logic //
@@ -342,48 +346,29 @@ function movePlayerTwo() {
     playerTwoY++;
 
 
-    //***WHAT HAVE I DONE:
-    //the computer is encouraged to occupy squares with the class empty and player One
-    //then we say, if the squares immeditately to the left, right, and upside of you are coloured playerTwo, go down. etc. etc.
-    // Preventative movement logic //
-
-    //if all 4 have class player 1 or empty, generate randomly from fullMoveset Array
-    //if L/U/R have class player 1 or empty, but Down has class player two, generate from noDownMove Array
-    //if U/R/D have class player 1 or empty, but Left has class player two, generate from noLeftMove Array
-    //if R/D/L have class player 1 or empty, but Up has class playerTwo, genenrate from noUpMove Array
-    //if D/L/U have class player 1 or empty, but Right has class playerTwo, genenrate from noRightMove Array
-    //if L/U have class player 1 or empty, but R/D has class playerTwo, genenrate from L/U Array
-    //if U/R have class player 1 or empty, but D/L has class playerTwo, genenrate from U/R Array
-    //if R/D have class player 1 or empty, but L/U has class playerTwo, genenrate from R/D Array
-    //if D/L have class player 1 or empty, but U/R has class playerTwo, genenrate from U/R Array
-    //if L/R have class player 1 or empty, but U/D has class playerTwo, genenrate from l/R Array
-    //if U/D have class player 1 or empty, but L/R has class playerTwo, genenrate from U/D Array
-
-
-  // if ((PNTL contains pO || e) && (PNTU contains pO || e)
-  } else if ((potentialNewTileUp.classList.contains('playerOne') || potentialNewTileUp.classList.contains('playerThree') || potentialNewTileUp.classList.contains('playerFour') || potentialNewTileLeft.classList.contains('empty')) && playerTwoX > 1) {
+  } else if (($potentialNewTileUp.hasClass('playerOne') || $potentialNewTileUp.hasClass('playerThree') || $potentialNewTileUp.hasClass('playerFour') || $potentialNewTileLeft.hasClass('empty')) && playerTwoX > 1) {
     playerTwoX--;
   } else if (playerTwoX === 1) {
     playerTwoX++;
-  } else if ((potentialNewTileUp.classList.contains('playerOne') || potentialNewTileUp.classList.contains('playerThree') || potentialNewTileUp.classList.contains('playerFour') || potentialNewTileUp.classList.contains('empty')) && playerTwoY < 10) {
+  } else if (($potentialNewTileUp.hasClass('playerOne') || $potentialNewTileUp.hasClass('playerThree') || $potentialNewTileUp.hasClass('playerFour') || $potentialNewTileUp.hasClass('empty')) && playerTwoY < 10) {
     playerTwoY++;
   } else if (playerTwoY === 10) {
     playerTwoY--;
-  } else if ((potentialNewTileUp.classList.contains('playerOne') || potentialNewTileUp.classList.contains('playerThree') || potentialNewTileUp.classList.contains('playerFour') || potentialNewTileRight.classList.contains('empty')) && playerTwoX < 10) {
+  } else if (($potentialNewTileUp.hasClass('playerOne') || $potentialNewTileUp.hasClass('playerThree') || $potentialNewTileUp.hasClass('playerFour') || $potentialNewTileRight.hasClass('empty')) && playerTwoX < 10) {
     playerTwoX++;
   } else if (playerTwoX === 10) {
     playerTwoX--;
-  } else if ((potentialNewTileUp.classList.contains('playerOne') || potentialNewTileUp.classList.contains('playerThree') || potentialNewTileUp.classList.contains('playerFour') || potentialNewTileDown.classList.contains('empty')) && playerTwoY > 1) {
+  } else if (($potentialNewTileUp.hasClass('playerOne') || $potentialNewTileUp.hasClass('playerThree') || $potentialNewTileUp.hasClass('playerFour') || $potentialNewTileDown.hasClass('empty')) && playerTwoY > 1) {
     playerTwoY--;
   } else if (playerTwoY === 1) {
     playerTwoY++;
-  } else if (potentialNewTileLeft.classList.contains('playerTwo') && potentialNewTileUp.classList.contains('playerTwo') && potentialNewTileRight.classList.contains('playerTwo')) {
+  } else if ($potentialNewTileLeft.hasClass('playerTwo') && $potentialNewTileUp.hasClass('playerTwo') && $potentialNewTileRight.hasClass('playerTwo')) {
     playerTwoY--;
-  } else if (potentialNewTileLeft.classList.contains('playerTwo') && potentialNewTileUp.classList.contains('playerTwo') && potentialNewTileDown.classList.contains('playerTwo')) {
+  } else if ($potentialNewTileLeft.hasClass('playerTwo') && $potentialNewTileUp.hasClass('playerTwo') && $potentialNewTileDown.hasClass('playerTwo')) {
     playerTwoX++;
-  } else if (potentialNewTileLeft.classList.contains('playerTwo') && potentialNewTileRight.classList.contains('playerTwo') && potentialNewTileDown.classList.contains('playerTwo')) {
+  } else if ($potentialNewTileLeft.hasClass('playerTwo') && $potentialNewTileRight.hasClass('playerTwo') && $potentialNewTileDown.hasClass('playerTwo')) {
     playerTwoY++;
-  } else if (potentialNewTileUp.classList.contains('playerTwo') && potentialNewTileRight.classList.contains('playerTwo') && potentialNewTileDown.classList.contains('playerTwo')) {
+  } else if ($potentialNewTileUp.hasClass('playerTwo') && $potentialNewTileRight.hasClass('playerTwo') && $potentialNewTileDown.hasClass('playerTwo')) {
     playerTwoX--;
   } else if (move === 0 && playerTwoX !== 1) {
     playerTwoX--;
@@ -396,25 +381,25 @@ function movePlayerTwo() {
   }
 
   //       playerTwo Score/Class Logic      //
-  const $playerTwoPosition = document.querySelector(`div[rowid="${playerTwoY}"][columnid="${playerTwoX}"]`);
+  const $playerTwoPosition = $(`div[rowid="${playerTwoY}"][columnid="${playerTwoX}"]`);
   $playableSquares.forEach(playableSquare => {
-    if (playableSquare.classList.contains('playerTwoCurrent')) {
-      playableSquare.classList.remove('playerTwoCurrent');
+    if (playableSquare.hasClass('playerTwoCurrent')) {
+      playableSquare.removeClass('playerTwoCurrent');
     }
   });
-  $playerTwoPosition.classList.add('playerTwoCurrent');
-  $playerTwoPosition.classList.add('playerTwo');
-  $playerTwoPosition.classList.remove('playerOne');
-  $playerTwoPosition.classList.remove('playerThree');
-  $playerTwoPosition.classList.remove('playerFour');
-  $playerTwoPosition.classList.remove('empty');
+  $playerTwoPosition.addClass('playerTwoCurrent');
+  $playerTwoPosition.addClass('playerTwo');
+  $playerTwoPosition.removeClass('playerOne');
+  $playerTwoPosition.removeClass('playerThree');
+  $playerTwoPosition.removeClass('playerFour');
+  $playerTwoPosition.removeClass('empty');
   playerTwoCurrentScore++;
 
   if (playerTwoX === crateX && playerTwoY === crateY) {
-    const squaresToRemove = document.querySelectorAll('.playerTwo');
-    squaresToRemove.forEach(square => square.classList.remove('playerTwo'));
-    $playerTwoPosition.classList.remove('crate');
-    $playerTwoPosition.classList.add('playerTwo');
+    const $squaresToRemove = document.querySelectorAll('.playerTwo');
+    $squaresToRemove.forEach(square => square.removeClass('playerTwo'));
+    $playerTwoPosition.removeClass('crate');
+    $playerTwoPosition.addClass('playerTwo');
     playerTwoBankedScore = playerTwoBankedScore + playerTwoCurrentScore;
     playerTwoCurrentScore = 0;
     const $playerTwoScore = $('.playerTwoScorecard');
@@ -436,10 +421,10 @@ function movePlayerTwo() {
 // playerThree Movement Logic   //
 //****************************//
 function moveplayerThree() {
-  const potentialNewTileLeft = document.querySelector(`div[rowid="${playerThreeY}"][columnid="${playerThreeX - 1}"]`);
-  const potentialNewTileUp = document.querySelector(`div[rowid="${playerThreeY + 1}"][columnid="${playerThreeX}"]`);
-  const potentialNewTileRight = document.querySelector(`div[rowid="${playerThreeY}"][columnid="${playerThreeX + 1}"]`);
-  const potentialNewTileDown = document.querySelector(`div[rowid="${playerThreeY - 1}"][columnid="${playerThreeX}"]`);
+  const $potentialNewTileLeft = $(`div[rowid="${playerThreeY}"][columnid="${playerThreeX - 1}"]`);
+  const $potentialNewTileUp = $(`div[rowid="${playerThreeY + 1}"][columnid="${playerThreeX}"]`);
+  const $potentialNewTileRight = $(`div[rowid="${playerThreeY}"][columnid="${playerThreeX + 1}"]`);
+  const $potentialNewTileDown = $(`div[rowid="${playerThreeY - 1}"][columnid="${playerThreeX}"]`);
   const move = Math.floor((Math.random() * 4));
 
   // Rudimentary Barrier logic //
@@ -453,23 +438,23 @@ function moveplayerThree() {
     playerThreeY++;
 
   // Preventative movement logic //
-  } else if ((potentialNewTileLeft.classList.contains('playerOne') || potentialNewTileLeft.classList.contains('empty')) && playerThreeX > 1) {
+  } else if (($potentialNewTileLeft.hasClass('playerOne') || $potentialNewTileLeft.hasClass('empty')) && playerThreeX > 1) {
     playerThreeX--;
   } else if (playerThreeX === 1) {
     playerThreeX++;
-  } else if (potentialNewTileUp.classList.contains('playerOne') || potentialNewTileUp.classList.contains('empty')) {
+  } else if ($potentialNewTileUp.hasClass('playerOne') || $potentialNewTileUp.hasClass('empty')) {
     playerThreeY++;
-  } else if (potentialNewTileRight.classList.contains('playerOne') || potentialNewTileRight.classList.contains('empty')) {
+  } else if ($potentialNewTileRight.hasClass('playerOne') || $potentialNewTileRight.hasClass('empty')) {
     playerThreeX++;
-  } else if (potentialNewTileDown.classList.contains('playerOne') || potentialNewTileDown.classList.contains('empty')) {
+  } else if ($potentialNewTileDown.hasClass('playerOne') || $potentialNewTileDown.hasClass('empty')) {
     playerThreeY--;
-  } else if (potentialNewTileLeft.classList.contains('playerThree') && potentialNewTileUp.classList.contains('playerThree') && potentialNewTileRight.classList.contains('playerThree')) {
+  } else if ($potentialNewTileLeft.hasClass('playerThree') && $potentialNewTileUp.hasClass('playerThree') && $potentialNewTileRight.hasClass('playerThree')) {
     playerThreeY--;
-  } else if (potentialNewTileLeft.classList.contains('playerThree') && potentialNewTileUp.classList.contains('playerThree') && potentialNewTileDown.classList.contains('playerThree')) {
+  } else if ($potentialNewTileLeft.hasClass('playerThree') && $potentialNewTileUp.hasClass('playerThree') && $potentialNewTileDown.hasClass('playerThree')) {
     playerThreeX++;
-  } else if (potentialNewTileLeft.classList.contains('playerThree') && potentialNewTileRight.classList.contains('playerThree') && potentialNewTileDown.classList.contains('playerThree')) {
+  } else if ($potentialNewTileLeft.hasClass('playerThree') && $potentialNewTileRight.hasClass('playerThree') && $potentialNewTileDown.hasClass('playerThree')) {
     playerThreeY++;
-  } else if (potentialNewTileUp.classList.contains('playerThree') && potentialNewTileRight.classList.contains('playerThree') && potentialNewTileDown.classList.contains('playerThree')) {
+  } else if ($potentialNewTileUp.hasClass('playerThree') && $potentialNewTileRight.hasClass('playerThree') && $potentialNewTileDown.hasClass('playerThree')) {
     playerThreeX--;
   } else if (move === 0 && playerThreeX !== 1) {
     playerThreeX--;
@@ -483,24 +468,24 @@ function moveplayerThree() {
 
   const $playerThreePosition = document.querySelector(`div[rowid="${playerThreeY}"][columnid="${playerThreeX}"]`);
   $playableSquares.forEach(playableSquare => {
-    if (playableSquare.classList.contains('playerThreeCurrent')) {
-      playableSquare.classList.remove('playerThreeCurrent');
+    if (playableSquare.hasClass('playerThreeCurrent')) {
+      playableSquare.removeClass('playerThreeCurrent');
     }
   });
-  $playerThreePosition.classList.add('playerThreeCurrent');
-  $playerThreePosition.classList.add('playerThree');
-  $playerThreePosition.classList.remove('playerOne');
-  $playerThreePosition.classList.remove('playerTwo');
-  $playerThreePosition.classList.remove('playerFour');
-  $playerThreePosition.classList.remove('empty');
+  $playerThreePosition.addClass('playerThreeCurrent');
+  $playerThreePosition.addClass('playerThree');
+  $playerThreePosition.removeClass('playerOne');
+  $playerThreePosition.removeClass('playerTwo');
+  $playerThreePosition.removeClass('playerFour');
+  $playerThreePosition.removeClass('empty');
   playerThreeCurrentScore++;
 
 
   if (playerThreeX === crateX && playerThreeY === crateY) {
-    const squaresToRemove = document.querySelectorAll('.playerThree');
-    squaresToRemove.forEach(square => square.classList.remove('playerThree'));
-    $playerThreePosition.classList.remove('crate');
-    $playerThreePosition.classList.add('playerThree');
+    const $squaresToRemove = document.querySelectorAll('.playerThree');
+    $squaresToRemove.forEach(square => square.removeClass('playerThree'));
+    $playerThreePosition.removeClass('crate');
+    $playerThreePosition.addClass('playerThree');
     playerThreeBankedScore = playerThreeBankedScore + playerThreeCurrentScore;
     console.log(playerThreeCurrentScore);
     playerThreeCurrentScore = 0;
@@ -539,9 +524,9 @@ function moveplayerFour() {
   // Preventative movement logic //
   } else if (move === 0) {
     // console.log('left');
-    const potentialNewTile = document.querySelector(`div[rowid="${playerFourY}"][columnid="${playerFourX - 1}"]`);
+    const $potentialNewTile = $(`div[rowid="${playerFourY}"][columnid="${playerFourX - 1}"]`);
     // console.log(potentialNewTile);
-    if (potentialNewTile.classList.contains('playerFour')) {
+    if ($potentialNewTile.hasClass('playerFour')) {
       // console.log('i am moving up');
       playerFourY++;
     } else {
@@ -550,8 +535,8 @@ function moveplayerFour() {
 
   } else if (move === 1) {
     // console.log('up');
-    const potentialNewTile = document.querySelector(`div[rowid="${playerFourY + 1}"][columnid="${playerFourX}"]`);
-    if (potentialNewTile.classList.contains('playerFour')) {
+    const $potentialNewTile = $(`div[rowid="${playerFourY + 1}"][columnid="${playerFourX}"]`);
+    if ($potentialNewTile.classList.hasClass('playerFour')) {
       // console.log('i am moving right');
       playerFourX++;
     } else {
@@ -560,42 +545,40 @@ function moveplayerFour() {
 
   } else if (move === 2) {
     // console.log('right');
-    const potentialNewTile = document.querySelector(`div[rowid="${playerFourY}"][columnid="${playerFourX + 1}"]`);
-    if (potentialNewTile.classList.contains('playerFour')) {
-      // console.log('i am moving down');
+    const $potentialNewTile = $(`div[rowid="${playerFourY}"][columnid="${playerFourX + 1}"]`);
+    if ($potentialNewTile.hasClass('playerFour')) {
       playerFourY--;
     } else {
       playerFourX++;
     }
 
   } else if (move === 3) {
-    // console.log('down');
-    const potentialNewTile = document.querySelector(`div[rowid="${playerFourY - 1}"][columnid="${playerFourX}"]`);
-    if (potentialNewTile.classList.contains('playerFour')) {
+    const $potentialNewTile = $(`div[rowid="${playerFourY - 1}"][columnid="${playerFourX}"]`);
+    if ($potentialNewTile.hasClass('playerFour')) {
       playerFourX--;
     }
   } else {
     playerFourY--;
   }
-  const $playerFourPosition = document.querySelector(`div[rowid="${playerFourY}"][columnid="${playerFourX}"]`);
+  const $playerFourPosition = $(`div[rowid="${playerFourY}"][columnid="${playerFourX}"]`);
   $playableSquares.forEach(playableSquare => {
-    if (playableSquare.classList.contains('playerFourCurrent')) {
-      playableSquare.classList.remove('playerFourCurrent');
+    if (playableSquare.hasClass('playerFourCurrent')) {
+      playableSquare.removeClass('playerFourCurrent');
     }
   });
-  $playerFourPosition.classList.add('playerFourCurrent');
-  $playerFourPosition.classList.add('playerFour');
-  $playerFourPosition.classList.remove('playerOne');
-  $playerFourPosition.classList.remove('playerTwo');
-  $playerFourPosition.classList.remove('playerThree');
-  $playerFourPosition.classList.remove('empty');
+  $playerFourPosition.addClass('playerFourCurrent');
+  $playerFourPosition.addClass('playerFour');
+  $playerFourPosition.removeClass('playerOne');
+  $playerFourPosition.removeClass('playerTwo');
+  $playerFourPosition.removeClass('playerThree');
+  $playerFourPosition.removeClass('empty');
   playerFourCurrentScore++;
 
   if (playerFourX === crateX && playerFourY === crateY) {
-    const squaresToRemove = document.querySelectorAll('.playerFour');
-    squaresToRemove.forEach(square => square.classList.remove('playerFour'));
-    $playerFourPosition.classList.remove('crate');
-    $playerFourPosition.classList.add('playerFour');
+    const $squaresToRemove = $('.playerFour');
+    $squaresToRemove.forEach(square => square.removeClass('playerFour'));
+    $playerFourPosition.removeClass('crate');
+    $playerFourPosition.addClass('playerFour');
     playerFourBankedScore = playerFourBankedScore + playerFourCurrentScore;
     playerFourCurrentScore = 0;
     const $playerFourScore = $('.playerFourScorecard');
