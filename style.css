@@ -6,7 +6,6 @@
   justify-content: center;
   background: url(PacmanVectors/NightSky.gif) no-repeat;
   background-size: cover;
-  animation: animatedBackground 5s linear infinite;
 }
 
 
@@ -67,7 +66,6 @@
   width: 60px;
   border: none;
 
-  /* color: #FFEE00; */
   font-family: 'Orbitron', sans-serif;
 }
 
@@ -312,13 +310,5 @@ div {
   }
   100% {
     background-size: 49px 49px;
-  }
-}
-
-@keyframes animatedBackground {
-	from {
-    background-position: 0 0;
-  }
-  to { background-position: 100% 0;
   }
 }

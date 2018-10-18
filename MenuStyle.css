@@ -1,0 +1,145 @@
+html {
+  background-color: black;
+}
+
+#menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+
+  width: 10vq;
+  height: 160px;
+
+  color: #FFEE00;
+  font-family: 'Orbitron', sans-serif;
+  background-color: black;
+}
+
+.button {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 24vw;
+  height: 100px;
+  color: #FFEE00;
+  font-size: 60px;
+  background: url(PacmanVectors/dot.svg);
+  border: none;
+}
+
+.rightToLeft {
+  height: 150px;
+  width: 100vw;
+  background: url(PacmanVectors/RightToLeft.gif) no-repeat;
+  background-size: cover;
+}
+
+.avatar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.greengif {
+  display: block;
+  height: 50px;
+  width: 50px;
+  background: url(PacmanVectors/greengif.gif) no-repeat;
+  background-size: cover;
+}
+
+.chooseOne {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 200px;
+}
+.chooseOne:hover {
+  animation: avatarPulse 2s infinite;
+}
+
+.orangegif {
+  height: 50px;
+  width: 50px;
+  background: url(PacmanVectors/orangegif.gif) no-repeat;
+  background-size: cover;
+}
+
+.chooseTwo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 200px;
+}
+.chooseTwo:hover {
+  animation: avatarPulse 2s infinite;
+}
+
+.pinkgif {
+  height: 50px;
+  width: 50px;
+  background: url(PacmanVectors/pinkgif.gif) no-repeat;
+  background-size: cover;
+}
+
+.chooseThree {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 200px;
+}
+.chooseThree:hover {
+  animation: avatarPulse 2s infinite;
+}
+
+.redgif {
+  height: 50px;
+  width: 50px;
+  background: url(PacmanVectors/redgif.gif) no-repeat;
+  background-size: cover;
+}
+
+.chooseFour {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 200px;
+}
+
+.chooseFour:hover {
+  animation: avatarPulse 2s infinite;
+}
+
+.leftToRight {
+  height: 150px;
+  width: 100vw;
+  background: url(PacmanVectors/LeftToRight.gif) no-repeat;
+  background-size: cover;
+}
+
+@keyframes avatarPulse {
+  0% {
+    height: 100px;
+  }
+  50% {
+    height: 200px;
+  }
+  100% {
+    height: 100px;
+  }
+}

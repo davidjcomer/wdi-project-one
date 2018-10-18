@@ -37,27 +37,14 @@ let playerOneMoveInterval;
 let playerTwoMoveInterval;
 let playerThreeMoveInterval;
 let playerFourMoveInterval;
-let spawncherryInterval;
+let spawnCherryInterval;
 let spawnTurboStrawberryInterval;
 
-const audioButton = document.querySelector('.music');
+// const audioButton = document.querySelector('.music');
 const audio = document.querySelector('audio');
-
-audioButton.addEventListener('click', () => {
-  audio.play();
-});
-
-//****************************//
-//          Game Menu         //
-//****************************//
-// gameScreen.style.display = 'none';
-//
-// function switchScreen() {
-//   loadingSpan.addEventListener('click', function() {
-//     gameScreen.style.display = '';
-//   });
-// }
-// switchScreen();
+const spawnCherryAudio = document.getElementById('spawnCherry');
+const spawnTurboStrawberryAudio = document.getElementById('spawnTurboStrawberry');
+const eatFruitAudio = document.getElementById('eatFruit');
 
 window.addEventListener('keydown', handleKeyDownPlayer1, false);
 
@@ -76,12 +63,7 @@ function checkForWin() {
 
 function setPlayerOneTimer() {
   playerOneMoveInterval = setInterval(movePlayerOne, 750);
-  //clearInterval(playerOneMoveInterval);
-  //   if (playerTwo.hasClass('turboStrawberry')) {
-  //     setInterval(movePlayerTwo, 500);
-  //   } else {
 }
-
 function setPlayerTwoTimer() {
   playerTwoMoveInterval = setInterval(movePlayerTwo, 750);
 }
@@ -127,7 +109,6 @@ function playerFourTurbo() {
   }, turboTimeout);
 }
 
-
 //****************************//
 //     Loading the Grid       //
 //****************************//
@@ -162,13 +143,14 @@ const $playableSquares = document.querySelectorAll('.playableSquare');
 //     Start Button Logic     //
 //****************************//
 $start.click(function startGame(){
+  audio.play();
   time = 90;
   setPlayerOneTimer();
   setPlayerTwoTimer();
   setPlayerThreeTimer();
   setPlayerFourTimer();
-  setcherrySpawnTimer();
-  spawncherry();
+  setCherrySpawnTimer();
+  spawnCherry();
   setTurboStrawberrySpawnTimer();
   intervalId = setInterval(function () {
     time = time - 1;
@@ -179,7 +161,7 @@ $start.click(function startGame(){
       clearInterval(playerTwoMoveInterval);
       clearInterval(playerThreeMoveInterval);
       clearInterval(playerFourMoveInterval);
-      clearInterval(spawncherryInterval);
+      clearInterval(spawnCherryInterval);
       clearInterval(spawnTurboStrawberryInterval);
       checkForWin();
     }
@@ -201,7 +183,7 @@ $reset.click(function resetGame(){
   clearInterval(playerTwoMoveInterval);
   clearInterval(playerThreeMoveInterval);
   clearInterval(playerFourMoveInterval);
-  clearInterval(spawncherryInterval);
+  clearInterval(spawnCherryInterval);
   clearInterval(spawnTurboStrawberryInterval);
   clearInterval(intervalId);
   playerOneBankedScore = 0;
@@ -229,7 +211,7 @@ $reset.click(function resetGame(){
 //       Spawning Cherry       //
 //****************************//
 
-function spawncherry() {
+function spawnCherry() {
   $playableSquares.forEach(square => {
     if (square.classList.contains('cherry')) {
       square.classList.remove('cherry');
@@ -244,13 +226,14 @@ function spawncherry() {
   //   cherryPosition.classList.remove('playerTwo');
   // }
   cherryPosition.classList.add('cherry');
+  spawnCherryAudio.play();
 }
-spawncherry();
+spawnCherry();
 
-function setcherrySpawnTimer() {
-  spawncherryInterval = setInterval(spawncherry, 10000);
+function setCherrySpawnTimer() {
+  spawnCherryInterval = setInterval(spawnCherry, 10000);
 }
-setcherrySpawnTimer();
+setCherrySpawnTimer();
 
 
 //****************************//
@@ -265,19 +248,17 @@ function spawnTurboStrawberry() {
   turboStrawberryY = Math.ceil((Math.random() * 10));
   const turboStrawberryPosition = document.querySelector(`div[rowid="${turboStrawberryY}"][columnid="${turboStrawberryX}"]`);
   turboStrawberryPosition.classList.add('turboStrawberry');
+  spawnTurboStrawberryAudio.play();
 }
-// spawnTurboStrawberry();
+
 
 function setTurboStrawberrySpawnTimer() {
   spawnTurboStrawberryInterval = setInterval(spawnTurboStrawberry, 7500);
 }
 
-
-
 //****************************//
 // playerOne Movement Logic   //
 //****************************//
-// const $playerOnePosition = document.querySelector(`div[rowid="${playerOneY}"][columnid="${playerOneX}"]`);
 
 //      Key Handler Logic     //
 let PlayerOneKeydown;
@@ -347,6 +328,7 @@ function movePlayerOne() {
     const $playerOneScore = $('.playerOneScorecard');
     $playerOneScore.html(`${playerOneBankedScore}`);
     $playerOnePosition.classList.add('playerOne');
+    eatFruitAudio.play();
   }
 
   //    Strawberry Collision Logic   //
@@ -354,6 +336,7 @@ function movePlayerOne() {
   if (playerOneX === turboStrawberryX && playerOneY === turboStrawberryY) {
     $playerOnePosition.classList.remove('turboStrawberry');
     playerOneTurbo();
+    eatFruitAudio.play();
   }
 }
 
@@ -436,6 +419,7 @@ function movePlayerTwo() {
     playerTwoCurrentScore = 0;
     const $playerTwoScore = $('.playerTwoScorecard');
     $playerTwoScore.html(`${playerTwoBankedScore}`);
+    eatFruitAudio.play();
   }
 
   //    Strawberry Collision Logic   //
@@ -444,6 +428,7 @@ function movePlayerTwo() {
     $playerTwoPosition.classList.remove('turboStrawberry');
     $playerTwoPosition.classList.add('playerTwo');
     playerTwoTurbo();
+    eatFruitAudio.play();
   }
 }
 
@@ -521,6 +506,7 @@ function movePlayerThree() {
     playerThreeCurrentScore = 0;
     const $playerThreeScore = $('.playerThreeScorecard');
     $playerThreeScore.html(`${playerThreeBankedScore}`);
+    eatFruitAudio.play();
   }
 
   //    Strawberry Collision Logic   //
@@ -529,6 +515,7 @@ function movePlayerThree() {
     $playerThreePosition.classList.remove('turboStrawberry');
     $playerThreePosition.classList.add('playerThree');
     playerThreeTurbo();
+    eatFruitAudio.play();
   }
 }
 
@@ -612,6 +599,7 @@ function movePlayerFour() {
     playerFourCurrentScore = 0;
     const $playerFourScore = $('.playerFourScorecard');
     $playerFourScore.html(`${playerFourBankedScore}`);
+    eatFruitAudio.play();
   }
 
   //    Strawberry Collision Logic   //
@@ -620,5 +608,6 @@ function movePlayerFour() {
     $playerFourPosition.classList.remove('turboStrawberry');
     $playerFourPosition.classList.add('playerFour');
     playerFourTurbo();
+    eatFruitAudio.play();
   }
 }

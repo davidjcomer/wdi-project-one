@@ -143,6 +143,19 @@
 //
 // //proposed computer movement Logic
 //
+
+
+// const noLeftMove = [Y++, X++, Y--];
+// const noUpMove = [X--, X++, Y--];
+// const noRightMove = ['X--', 'Y++', 'Y--'];
+// const noDownMove = [X--, Y++, X++];
+// const leftUpMoves = [X--, Y++];
+// const UpRightMoves= [Y++, X++];
+// const RightDownMoves = [X++, Y--];
+// const DownLeftMoves = [Y--, X--];
+// const LeftRightMoves = [X--, X++];
+// const UpDownMoves = [Y++,Y--];
+
 // //***WHAT HAVE I DONE:
 // //the computer is encouraged to occupy squares with the class empty and player One/Two.Thre
 // //then we say, if the squares immeditately to the left, right, and upside of you are coloured playerTwo, go down. etc. etc.

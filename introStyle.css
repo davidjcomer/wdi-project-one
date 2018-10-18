@@ -1,0 +1,21 @@
+body {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+align-items: center;
+background-color: black;
+}
+
+a {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+  width: 80%;
+}
+
+img {
+  height: 80%;
+  width: 80%;
+}
