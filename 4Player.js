@@ -1,9 +1,6 @@
 //****************************//
 //     Global Variables       //
 //****************************//
-// const loadingScreen = document.getElementById('loadingScreen');
-// const loadingSpan = document.getElementById('loadingSpan');
-// const gameScreen = document.getElementById('gameScreen');
 
 let playerOneX = 1;
 let playerOneY = 1;
@@ -40,23 +37,26 @@ let playerFourMoveInterval;
 let spawnCherryInterval;
 let spawnTurboStrawberryInterval;
 
-// const audioButton = document.querySelector('.music');
 const audio = document.querySelector('audio');
 const spawnCherryAudio = document.getElementById('spawnCherry');
 const spawnTurboStrawberryAudio = document.getElementById('spawnTurboStrawberry');
 const eatFruitAudio = document.getElementById('eatFruit');
 
-window.addEventListener('keydown', handleKeyDownPlayer1, false);
+window.addEventListener('keydown', handleKeydownPlayerOne, false);
 
 //****************************//
 //          Win Logic         //
 //****************************//
 function checkForWin() {
-  if (playerOneBankedScore > playerTwoBankedScore) {
+  if (playerOneBankedScore > playerTwoBankedScore && playerOneBankedScore > playerThreeBankedScore && playerOneBankedScore > playerFourBankedScore) {
     alert('Player One wins');
-  } else if (playerOneBankedScore < playerTwoBankedScore) {
+  } else if (playerTwoBankedScore > playerOneBankedScore && playerTwoBankedScore > playerThreeBankedScore && playerTwoBankedScore > playerFourBankedScore) {
     alert('Player Two wins');
-  } else if (playerOneBankedScore === playerTwoBankedScore) {
+  } else if (playerThreeBankedScore > playerOneBankedScore && playerThreeBankedScore > playerTwoBankedScore && playerThreeBankedScore > playerFourBankedScore) {
+    alert('Player Three wins');
+  } else if (playerFourBankedScore > playerOneBankedScore && playerFourBankedScore > playerThreeBankedScore && playerFourBankedScore > playerThreeBankedScore) {
+    alert('Player Four wins');
+  } else if (playerOneBankedScore === playerTwoBankedScore === playerThreeBankedScore === playerFourBankedScore) {
     alert('draw');
   }
 }
@@ -82,7 +82,6 @@ function playerOneTurbo() {
     setPlayerOneTimer();
   }, turboTimeout);
 }
-
 function playerTwoTurbo() {
   clearInterval(playerTwoMoveInterval);
   const playerTwoTurboInterval = setInterval(movePlayerTwo, 325);
@@ -91,7 +90,6 @@ function playerTwoTurbo() {
     setPlayerTwoTimer();
   }, turboTimeout);
 }
-
 function playerThreeTurbo() {
   clearInterval(playerThreeMoveInterval);
   const playerThreeTurboInterval = setInterval(movePlayerThree, 325);
@@ -120,15 +118,19 @@ function loadGrid() {
       emptyTile.classList.add('empty');
       if (columns === (playerOneX - 1) && rows === (playerOneY - 1)) {
         emptyTile.classList.add('playerOneCurrent');
+        emptyTile.classList.add('playerOne');
       }
       if (columns === (playerTwoX - 1) && rows === (playerTwoY - 1)) {
         emptyTile.classList.add('playerTwoCurrent');
+        emptyTile.classList.add('playerTwo');
       }
       if (columns === (playerThreeX - 1) && rows === (playerThreeY - 1)) {
         emptyTile.classList.add('playerThreeCurrent');
+        emptyTile.classList.add('playerThree');
       }
       if (columns === (playerFourX - 1) && rows === (playerFourY - 1)) {
         emptyTile.classList.add('playerFourCurrent');
+        emptyTile.classList.add('playerFour');
       }
       $gridSpace.append(emptyTile);
       emptyTile.setAttribute('rowid', rows + 1);
@@ -220,11 +222,6 @@ function spawnCherry() {
   cherryX = Math.ceil((Math.random() * 10));
   cherryY = Math.ceil((Math.random() * 10));
   const cherryPosition = document.querySelector(`div[rowid="${cherryY}"][columnid="${cherryX}"]`);
-  // if (cherryPosition.classList.contains('playerOne')) {
-  //   cherryPosition.classList.remove('playerOne');
-  // } else if (cherryPosition.classList.contains('playerTwo')) {
-  //   cherryPosition.classList.remove('playerTwo');
-  // }
   cherryPosition.classList.add('cherry');
   spawnCherryAudio.play();
 }
@@ -247,22 +244,22 @@ function spawnTurboStrawberry() {
   turboStrawberryX = Math.ceil((Math.random() * 10));
   turboStrawberryY = Math.ceil((Math.random() * 10));
   const turboStrawberryPosition = document.querySelector(`div[rowid="${turboStrawberryY}"][columnid="${turboStrawberryX}"]`);
-  turboStrawberryPosition.classList.add('turboStrawberry');
+  if (turboStrawberryPosition.classList.contains('cherry')) {
+    spawnTurboStrawberry(); //go back to beginning of function
+  } else turboStrawberryPosition.classList.add('turboStrawberry');
   spawnTurboStrawberryAudio.play();
 }
 
-
 function setTurboStrawberrySpawnTimer() {
-  spawnTurboStrawberryInterval = setInterval(spawnTurboStrawberry, 7500);
+  spawnTurboStrawberryInterval = setInterval(spawnTurboStrawberry, 10000);
 }
 
 //****************************//
 // playerOne Movement Logic   //
 //****************************//
-
 //      Key Handler Logic     //
 let PlayerOneKeydown;
-function handleKeyDownPlayer1(event) {
+function handleKeydownPlayerOne(event) {
   PlayerOneKeydown = event.key;
 }
 
@@ -332,8 +329,8 @@ function movePlayerOne() {
   }
 
   //    Strawberry Collision Logic   //
-  console.log('checking for strawberry', playerOneX, playerOneY, turboStrawberryX, turboStrawberryY);
   if (playerOneX === turboStrawberryX && playerOneY === turboStrawberryY) {
+    clearInterval(playerOneMoveInterval);
     $playerOnePosition.classList.remove('turboStrawberry');
     playerOneTurbo();
     eatFruitAudio.play();
@@ -424,9 +421,8 @@ function movePlayerTwo() {
 
   //    Strawberry Collision Logic   //
   if (playerTwoX === turboStrawberryX && playerTwoY === turboStrawberryY) {
-    console.log('player two has eaten the turbo strawberry');
+    clearInterval(playerTwoMoveInterval);
     $playerTwoPosition.classList.remove('turboStrawberry');
-    $playerTwoPosition.classList.add('playerTwo');
     playerTwoTurbo();
     eatFruitAudio.play();
   }
@@ -511,9 +507,8 @@ function movePlayerThree() {
 
   //    Strawberry Collision Logic   //
   if (playerThreeX === turboStrawberryX && playerThreeY === turboStrawberryY) {
-    console.log('player three has eaten the turbo strawberry');
+    clearInterval(playerThreeMoveInterval);
     $playerThreePosition.classList.remove('turboStrawberry');
-    $playerThreePosition.classList.add('playerThree');
     playerThreeTurbo();
     eatFruitAudio.play();
   }
@@ -604,9 +599,8 @@ function movePlayerFour() {
 
   //    Strawberry Collision Logic   //
   if (playerFourX === turboStrawberryX && playerFourY === turboStrawberryY) {
-    console.log('player four has eaten the turbo strawberry');
+    clearInterval(playerFourMoveInterval);
     $playerFourPosition.classList.remove('turboStrawberry');
-    $playerFourPosition.classList.add('playerFour');
     playerFourTurbo();
     eatFruitAudio.play();
   }
