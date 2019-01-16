@@ -18,11 +18,22 @@ To build a multiplayer, grid-based game using HTML5, CSS & JavaScript.
 * Use Javascript or jQuery for DOM manipulation
 * Deploy online, using Github Pages.
 
-## Instructions
+## Concept
+
+Ghosts is a tile-painter game based on the "Pogo Painter" party game featured in Crash Bash (2000) from the Crash Bandicoot series:
+
+https://www.youtube.com/watch?v=cnhK9EeTqZA
+
+![Pogo Painter](Screenshots/PogoPainter.jpg)
+
+# Insructions
 
 * Using the directional buttons on the keypad, move around the board, painting squares in your colour.
+
 * The winner is the player with the highest score when the time runs out.
+
 * Eat the cherries to turn these squares into points.
+
 * Eat the strawberries to move at double-speed for a limited time.
 
 # Approach
@@ -31,13 +42,13 @@ To build a multiplayer, grid-based game using HTML5, CSS & JavaScript.
 
 The Game consists of 3 screens.
 1. <strong>Start</strong><br> A simple, single-element screen prompting the user to click the button to begin the game.
-![Game Menu](Screenshots/IntroScreen.png)
+![IntroScreen](Screenshots/IntroScreen.png)
 
 1. <strong>Menu</strong><br> A screen prompting the user to select one of four game modes.<br>
 ![Game Menu](Screenshots/GameMenu.png)
 
 1. <strong>Game</strong><br> A screen that lays out the game board, 4 scorecards, a clock and two buttons to start or reset the game.<br>
-![Game Menu](Screenshots/Game.png)
+![Game](Screenshots/Game.png)
 
 ## Building the grid
 
@@ -119,6 +130,10 @@ The player can consume one of 2 items.
 * Cherry
 * Strawberry
 
+Consuming a cherry calculates how many tiles on the board have been painted in that players colour, then adds that number to the player's score.
+
+Consuming a strawberry allows the player to move at double speed for a limited time.
+
 # Wins
 
 <strong>Classes</strong>
@@ -154,7 +169,8 @@ playerOneCurrentScore++;
 <strong>Special Items</strong>
 
 This was definitely the most fun part of the project.
-When the player eats a strawberry, the interval at which the gameScreen recognises a directional keypress halves. This allows the player to register twice as many keypresses as usual, thereby moving twice as quickly.
+
+When the player eats a strawberry, the interval at which the game recognises that players directional keypresses is cut in half.<br>This allows the player to register twice as many keypresses as usual, thereby moving twice as quickly.
 
 
 ```JavaScript
@@ -182,7 +198,7 @@ if (playerOneX === turboStrawberryX && playerOneY === turboStrawberryY) {
 
 <strong>Automated Players</strong>
 
-* Playing with the capabilities of players 2, 3 & 4 was challenging and frustrating at times. Each of them has a slightly different way of playing.
+Playing with the capabilities of players 2, 3 & 4 was challenging and frustrating at times. Each of them has a slightly different way of playing.
 
 Each automated player looks for a potential new tile to move into, moving one square forward (++) or backward (--) along the X or Y axis.
 
@@ -203,11 +219,11 @@ This causes a game difficulty issue problem, insofar as Players 3 & 4 become ver
 # Future Revision
 
 <strong>Refactoring</strong>
-* jQuery
-* functions that take players as arguments.
+* The code that dictates the movement logic for each automated player is far too long. A next step will be to design functions that take players as arguments, rather than repeat lines of wet code for each player.
 
 <strong>Levels</strong>
-* make computers smarter
+* Should player 1 finish the game with the highest score on the board, they will move onto level 2, where the opponents are faster moving.
+
 * integrate more complex items/weaponry...
 
 <strong>Additional fruit items</strong>
