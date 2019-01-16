@@ -81,6 +81,8 @@ function playerOneTurbo() {
     clearInterval(playerOneTurboInterval);
     setPlayerOneTimer();
   }, turboTimeout);
+  clearInterval(playerOneTurboInterval);
+  setPlayerOneTimer();
 }
 
 function playerTwoTurbo() {
@@ -409,7 +411,7 @@ function movePlayerTwo() {
   $playerTwoPosition.classList.remove('empty');
   playerTwoCurrentScore++;
 
-  //    cherry Collision Logic   //
+  //    Cherry Collision Logic   //
   if (playerTwoX === cherryX && playerTwoY === cherryY) {
     const squaresToRemove = document.querySelectorAll('.playerTwo');
     squaresToRemove.forEach(square => square.classList.remove('playerTwo'));
@@ -539,9 +541,7 @@ function movePlayerFour() {
   } else if (move === 0) {
     // console.log('left');
     const potentialNewTile = document.querySelector(`div[rowid="${playerFourY}"][columnid="${playerFourX - 1}"]`);
-    // console.log(potentialNewTile);
     if (potentialNewTile.classList.contains('playerFour')) {
-      // console.log('i am moving up');
       playerFourY++;
     } else {
       playerFourX--;
@@ -551,7 +551,6 @@ function movePlayerFour() {
     // console.log('up');
     const potentialNewTile = document.querySelector(`div[rowid="${playerFourY + 1}"][columnid="${playerFourX}"]`);
     if (potentialNewTile.classList.contains('playerFour')) {
-      // console.log('i am moving right');
       playerFourX++;
     } else {
       playerFourY++;
@@ -561,7 +560,6 @@ function movePlayerFour() {
     // console.log('right');
     const potentialNewTile = document.querySelector(`div[rowid="${playerFourY}"][columnid="${playerFourX + 1}"]`);
     if (potentialNewTile.classList.contains('playerFour')) {
-      // console.log('i am moving down');
       playerFourY--;
     } else {
       playerFourX++;

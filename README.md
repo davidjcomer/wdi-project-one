@@ -7,6 +7,7 @@
 * JavaScript
 * [Google Fonts](fonts.google.com)
 
+
 ## Brief
 To build a multiplayer, grid-based game using HTML5, CSS & JavaScript.
 
@@ -17,6 +18,12 @@ To build a multiplayer, grid-based game using HTML5, CSS & JavaScript.
 * Use Javascript or jQuery for DOM manipulation
 * Deploy online, using Github Pages.
 
+## Instructions
+
+* Using the directional buttons on the keypad, move around the board, painting squares in your colour.
+* The winner is the player with the highest score when the time runs out.
+* Eat the cherries to turn these squares into points.
+* Eat the strawberries to move at double-speed for a limited time.
 
 # Approach
 
@@ -112,7 +119,84 @@ The player can consume one of 2 items.
 * Cherry
 * Strawberry
 
-Wins & Blockers
+# Wins
+
+<strong>Classes</strong>
+
+I realised fairly early on that the simplest way to represent each player on the board was to assign each one two classes: one to show which tiles have been painted by the player in question, and one to show on which square that player currently sat.
+
+When a player moves into a new square several things happen:
+
+* The "current" class is removed from every square on the board, then reassigned to the square onto which that player has moved, therefore displaying the avatar of that player.
+
+* If the square onto which the player 1 is moving contains another player's class, it is removed.
+
+* The players class is added, painting the tile in that players assigned colour and adding 1 to the current score.
+
+To see something tangibly appear on-screen fairly early on in the process was a big motivator. The code below shows how the classes are reassigned when player 1 moves into a new square:
+
+```JavaScript
+const $playerOnePosition = document.querySelector(`div[rowid="${playerOneY}"][columnid="${playerOneX}"]`);
+$playableSquares.forEach(playableSquare => {
+  if (playableSquare.classList.contains('playerOneCurrent')) {
+    playableSquare.classList.remove('playerOneCurrent');
+  }
+});
+$playerOnePosition.classList.add('playerOneCurrent');
+$playerOnePosition.classList.add('playerOne');
+$playerOnePosition.classList.remove('playerTwo');
+$playerOnePosition.classList.remove('playerThree');
+$playerOnePosition.classList.remove('playerFour');
+$playerOnePosition.classList.remove('empty');
+playerOneCurrentScore++;
+```
+
+<strong>Special Items</strong>
+
+This was definitely the most fun part of the project.
+When the player eats a strawberry, the interval at which the gameScreen recognises a directional keypress halves. This allows the player to register twice as many keypresses as usual, thereby moving twice as quickly.
+
+
+```JavaScript
+function playerOneTurbo() {
+  clearInterval(playerOneMoveInterval);
+  const playerOneTurboInterval = setInterval(movePlayerOne, 325);
+  setTimeout(() => {
+    clearInterval(playerOneTurboInterval);
+    setPlayerOneTimer();
+  }, turboTimeout);
+}
+
+
+//    Strawberry Collision Logic   //
+console.log('checking for strawberry', playerOneX, playerOneY, turboStrawberryX, turboStrawberryY);
+if (playerOneX === turboStrawberryX && playerOneY === turboStrawberryY) {
+  $playerOnePosition.classList.remove('turboStrawberry');
+  playerOneTurbo();
+  eatFruitAudio.play();
+}
+}
+```
+
+# Blockers
+
+<strong>Automated Players</strong>
+
+* Playing with the capabilities of players 2, 3 & 4 was challenging and frustrating at times. Each of them has a slightly different way of playing.
+
+Each automated player looks for a potential new tile to move into, moving one square forward (++) or backward (--) along the X or Y axis.
+
+Based on what class that tile contains, each makes a decision whether to move there or not.
+
+<u>Player 2</u>
+
+Player 2 actively seeks to override other players tiles to detract from their score.
+This causes a problem when Player 2 comes within one tile's distance of another player, since it then follows that player around until that player eats a strawberry and is able to move away from Player 2 at double speed.
+
+<u>Players 3 & 4 </u>
+
+Players 3 and 4 have simple preventative movement logic built in, disallowing them from moving into barriers or retracing their own steps.
+This causes a game difficulty issue problem, insofar as Players 3 & 4 become very easy to beat.
 
 
 
