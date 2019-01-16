@@ -12,11 +12,11 @@
 To build a multiplayer, grid-based game using HTML5, CSS & JavaScript.
 
 <strong>The Game must:</strong>
-* Render in the browser
-* Include design logic for winning
-* Visually display which player has won
-* Use Javascript or jQuery for DOM manipulation
-* Deploy online, using Github Pages.
+- [x] Render in the browser
+- [x] Include design logic for winning
+- [x] Visually display which player has won
+- [x] Use Javascript or jQuery for DOM manipulation
+- [x] Deploy online, using Github Pages.
 
 ## Concept
 
@@ -26,7 +26,7 @@ https://www.youtube.com/watch?v=cnhK9EeTqZA
 
 ![Pogo Painter](Screenshots/PogoPainter.jpg)
 
-# Insructions
+# Instructions
 
 * Using the directional buttons on the keypad, move around the board, painting squares in your colour.
 
