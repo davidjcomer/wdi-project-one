@@ -75,14 +75,14 @@ function setPlayerFourTimer() {
 }
 
 function playerOneTurbo() {
+  console.log('turbo activated');
   clearInterval(playerOneMoveInterval);
   const playerOneTurboInterval = setInterval(movePlayerOne, 325);
+  console.log('interval halved');
   setTimeout(() => {
     clearInterval(playerOneTurboInterval);
     setPlayerOneTimer();
   }, turboTimeout);
-  clearInterval(playerOneTurboInterval);
-  setPlayerOneTimer();
 }
 function playerTwoTurbo() {
   clearInterval(playerTwoMoveInterval);

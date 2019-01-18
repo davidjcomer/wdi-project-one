@@ -253,7 +253,6 @@ function spawnTurboStrawberry() {
   spawnTurboStrawberryAudio.play();
 }
 
-
 function setTurboStrawberrySpawnTimer() {
   spawnTurboStrawberryInterval = setInterval(spawnTurboStrawberry, 7500);
 }
@@ -334,7 +333,7 @@ function movePlayerOne() {
   }
 
   //    Strawberry Collision Logic   //
-  console.log('checking for strawberry', playerOneX, playerOneY, turboStrawberryX, turboStrawberryY);
+  // console.log('checking for strawberry', playerOneX, playerOneY, turboStrawberryX, turboStrawberryY);
   if (playerOneX === turboStrawberryX && playerOneY === turboStrawberryY) {
     $playerOnePosition.classList.remove('turboStrawberry');
     playerOneTurbo();
@@ -362,6 +361,7 @@ function movePlayerTwo() {
   } else if (playerTwoY === 1) {
     playerTwoY++;
 
+// if the potential new tile is empty coloured by another player, move into it.
   } else if ((potentialNewTileUp.classList.contains('playerOne') || potentialNewTileUp.classList.contains('playerThree') || potentialNewTileUp.classList.contains('playerFour') || potentialNewTileLeft.classList.contains('empty')) && playerTwoX > 1) {
     playerTwoX--;
   } else if (playerTwoX === 1) {
@@ -386,15 +386,16 @@ function movePlayerTwo() {
     playerTwoY++;
   } else if (potentialNewTileUp.classList.contains('playerTwo') && potentialNewTileRight.classList.contains('playerTwo') && potentialNewTileDown.classList.contains('playerTwo')) {
     playerTwoX--;
-  } else if (move === 0 && playerTwoX !== 1) {
-    playerTwoX--;
-  } else if (move === 1 && playerTwoY !== 10) {
-    playerTwoY++;
-  } else if (move === 2 && playerTwoY !== 1) {
-    playerTwoY--;
-  } else if (move === 3 && playerTwoX !== 10){
-    playerTwoX++;
-  }
+    // if 0 is generated and player is not toward the left of the board
+  // } else if (move === 0 && playerTwoX !== 1) {
+  //   playerTwoX--;
+  // } else if (move === 1 && playerTwoY !== 10) {
+  //   playerTwoY++;
+  // } else if (move === 2 && playerTwoY !== 1) {
+  //   playerTwoY--;
+  // } else if (move === 3 && playerTwoX !== 10){
+  //   playerTwoX++;
+  // }
 
   //       playerTwo Score/Class Logic      //
   const $playerTwoPosition = document.querySelector(`div[rowid="${playerTwoY}"][columnid="${playerTwoX}"]`);
@@ -473,7 +474,8 @@ function movePlayerThree() {
     playerThreeY++;
   } else if (potentialNewTileUp.classList.contains('playerThree') && potentialNewTileRight.classList.contains('playerThree') && potentialNewTileDown.classList.contains('playerThree')) {
     playerThreeX--;
-  } else if (move === 0 && playerThreeX !== 1) {
+  }
+  else if (move === 0 && playerThreeX !== 1) {
     playerThreeX--;
   } else if (move === 1 && playerThreeY !== 10) {
     playerThreeY++;
